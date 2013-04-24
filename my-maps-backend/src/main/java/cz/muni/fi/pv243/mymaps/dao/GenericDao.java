@@ -32,4 +32,12 @@ public class GenericDao<T> {
          */
         return entity;
     }
+
+    public T getById(Long idy) {
+        /**
+         * TODO : updatecode
+         */
+        return null;
+    }
+
 }
