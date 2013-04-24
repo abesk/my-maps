@@ -2,8 +2,15 @@ package cz.muni.fi.pv243.mymaps.entities;
 
 
 public abstract class AbstractEntity  {
+    protected Long id;
 
-    public abstract Long getId();
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
