@@ -10,12 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>my-maps-model</artifactId>
+    <groupId>my-maps</groupId>    
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    
     <dependencies>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
-        </dependency>
+        </dependency>        
     </dependencies>
 
 
