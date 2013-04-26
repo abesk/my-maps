@@ -1,7 +1,10 @@
 package cz.muni.fi.pv243.mymaps.entities;
 
+import org.hibernate.search.annotations.Indexed;
 
+@Indexed(index = "id")
 public abstract class AbstractEntity  {
+    
     protected Long id;
 
     public Long getId(){
