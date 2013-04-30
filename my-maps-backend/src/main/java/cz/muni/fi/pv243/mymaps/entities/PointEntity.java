@@ -10,7 +10,7 @@ import org.hibernate.search.annotations.Field;
 
 /**
  *
- * @author Jiøí Holuša
+ * @author Jiri Holusa
  */
 public class PointEntity extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 19567189L;    

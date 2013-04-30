@@ -6,7 +6,7 @@ import org.infinispan.api.BasicCacheContainer;
 
 /**
  *  
- * @author Jiří Holuša
+ * @author Jiri Holusa
  */
 public interface CacheContainerProvider {
 

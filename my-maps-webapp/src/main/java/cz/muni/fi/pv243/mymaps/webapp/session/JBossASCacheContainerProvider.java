@@ -9,7 +9,7 @@ import org.infinispan.manager.DefaultCacheManager;
 
 
 /** 
- * @author Jiří Holuša
+ * @author Jiri Holusa
  */
 @ApplicationScoped
 public class JBossASCacheContainerProvider implements CacheContainerProvider {

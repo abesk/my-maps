@@ -9,7 +9,7 @@ import org.infinispan.api.BasicCache;
 
 /**
  *
- * @author Jiří Holuša
+ * @author Jiri Holusa
  */
 public class PointDaoImpl extends GenericDao<PointEntity> implements PointDao<PointEntity>{
     

@@ -10,6 +10,11 @@
     <module>my-maps-webapp</module>
   </modules>
   
+  <properties>    
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
   <packaging>pom</packaging>
   <name>my-maps</name>
     <build>
@@ -21,6 +26,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>

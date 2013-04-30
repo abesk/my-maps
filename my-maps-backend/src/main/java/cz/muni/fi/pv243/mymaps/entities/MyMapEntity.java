@@ -17,7 +17,7 @@ import org.hibernate.search.annotations.Resolution;
 
 /**
  *
- * @author Jiøí Holuša
+ * @author Jiri Holusa
  */
 public class MyMapEntity extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 19567189L;

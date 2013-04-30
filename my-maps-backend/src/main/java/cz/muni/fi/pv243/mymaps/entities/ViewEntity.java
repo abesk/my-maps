@@ -9,7 +9,7 @@ import org.hibernate.search.annotations.*;
 
 /**
  *
- * @author Jiøí Holuša
+ * @author Jiri Holusa
  */
 public class ViewEntity extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 19567189L;
