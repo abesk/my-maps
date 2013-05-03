@@ -18,12 +18,12 @@ public class JBossASCacheContainerProvider implements CacheContainerProvider {
 
    @Override
    public BasicCacheContainer getCacheContainer() throws IOException {
-      if (manager == null) {         
+     if (manager == null) {         
          manager = new DefaultCacheManager("infinispan.xml");         
          manager.start();           
       }
       
-      return manager;
+      return null;
    }
 
    @PreDestroy

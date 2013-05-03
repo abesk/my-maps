@@ -16,14 +16,22 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.arquillian>1.0.2.Final</version.arquillian>
+        <version.arquillian>1.0.3.Final</version.arquillian>
         <version.arquillian.container>1.0.0.CR3</version.arquillian.container>
+        <shrinkres.version>2.0.0-beta-2</shrinkres.version>
         <version.junit>4.10</version.junit>
         <version.specs>3.0.1.Final</version.specs>
     </properties>
     
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                <artifactId>shrinkwrap-resolver-bom</artifactId>
+                <version>${shrinkres.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
            <dependency>
               <groupId>org.jboss.arquillian</groupId>
               <artifactId>arquillian-bom</artifactId>
@@ -43,20 +51,31 @@
            <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <type>pom</type>
+            <version>${shrinkres.version}</version>
+        </dependency>
+        <dependency>
            <groupId>org.jboss.arquillian.junit</groupId>
            <artifactId>arquillian-junit-container</artifactId>
            <scope>test</scope>
         </dependency>
         <dependency>
-           <groupId>org.jboss.arquillian.container</groupId>
-           <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-           <version>1.0.0.CR3</version>
+           <groupId>org.jboss.as</groupId>
+           <artifactId>jboss-as-arquillian-container-remote</artifactId>
+           <version>7.1.1.Final</version>
            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-servlet</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
            <groupId>org.jboss.weld</groupId>
            <artifactId>weld-core</artifactId>
-           <version>1.1.5.Final</version>
+           <version>2.0.0.CR3</version>
            <scope>test</scope>
         </dependency>
         <dependency>
@@ -64,7 +83,8 @@
            <artifactId>slf4j-simple</artifactId>
            <version>1.6.4</version>
            <scope>test</scope>
-        </dependency>
+        </dependency>        
+       
         <!-- end of test dependencies -->
                
         <dependency>
@@ -91,7 +111,7 @@
             <groupId>my-maps</groupId>
             <artifactId>my-maps-backend</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency>        
     </dependencies>
     
     <repositories>
@@ -175,8 +195,7 @@
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <version>7.4.Final</version>
-                <executions>
-                    <!-- Undeploy the application on clean -->
+                <executions>                    
                     <execution>
                         <id>undeploy</id>
                         <phase>clean</phase>
@@ -186,9 +205,9 @@
                         <configuration>
                             <ignoreMissingDeployment>true</ignoreMissingDeployment>
                         </configuration>
-                    </execution>                   
+                    </execution>                 
 
-                    <!-- Deploy the application on install -->
+                    
                     <execution>
                         <id>deploy</id>
                         <phase>install</phase>
