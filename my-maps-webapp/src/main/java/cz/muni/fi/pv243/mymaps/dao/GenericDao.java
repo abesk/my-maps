@@ -4,6 +4,7 @@ import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
 import cz.muni.fi.pv243.mymaps.webapp.session.CacheContainerProvider;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
+import javax.annotation.ManagedBean;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -11,8 +12,9 @@ import javax.transaction.UserTransaction;
 import org.infinispan.api.BasicCache;
 
 @Model
+@ManagedBean
 @Dependent
-public class GenericDao<T extends AbstractEntity> implements PointDao<T> {
+public class GenericDao<T extends AbstractEntity>{
     protected Class<T> entityClass;
     
     @Inject
@@ -25,11 +27,11 @@ public class GenericDao<T extends AbstractEntity> implements PointDao<T> {
 
     public GenericDao() {
         ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
-        entityClass = (Class<T>) type.getActualTypeArguments()[0];
+        entityClass = (Class<T>) type.getActualTypeArguments()[0];         
     }
-
-    @Override
+    
     public T create(T entity) {
+        
         if(cache == null){
             //TODO: write exception text
             throw new IllegalStateException();
@@ -54,7 +56,6 @@ public class GenericDao<T extends AbstractEntity> implements PointDao<T> {
         return entity;
     }
 
-    @Override
     public void delete(T entity) {
         if(cache == null){
             //TODO: write exception text
@@ -76,7 +77,6 @@ public class GenericDao<T extends AbstractEntity> implements PointDao<T> {
         }
     }
 
-    @Override
     public T update(T entity) {
         if(cache == null){
             //TODO: write exception text
@@ -100,7 +100,6 @@ public class GenericDao<T extends AbstractEntity> implements PointDao<T> {
         return entity;
     }
 
-    @Override
     public T getById(Long id) {
         if(cache == null){
             //TODO: write exception text
