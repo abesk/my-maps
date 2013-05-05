@@ -4,8 +4,10 @@ package cz.muni.fi.pv243.mymaps.dao.impl;
 import cz.muni.fi.pv243.mymaps.dao.GenericDao;
 import cz.muni.fi.pv243.mymaps.dao.PointDao;
 import cz.muni.fi.pv243.mymaps.entities.PointEntity;
+import cz.muni.fi.pv243.mymaps.webapp.session.CacheContainerProvider;
 import java.io.IOException;
-import org.infinispan.api.BasicCache;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
  *
@@ -13,12 +15,10 @@ import org.infinispan.api.BasicCache;
  */
 public class PointDaoImpl extends GenericDao<PointEntity> implements PointDao<PointEntity>{
     
-    public PointDaoImpl() throws IOException{
-        cache = provider.getCacheContainer().getCache();
+    private static final String POINT_CACHE_NAME = "pointCache";
+        
+    @PostConstruct
+    public void init(){        
+        cache = provider.getCacheContainer().getCache(POINT_CACHE_NAME);        
     }
-    
-    public PointDaoImpl(BasicCache<Long, PointEntity> cache){
-        this.cache = cache;
-    }
-    
 }

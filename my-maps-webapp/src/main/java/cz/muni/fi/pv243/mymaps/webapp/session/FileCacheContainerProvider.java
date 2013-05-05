@@ -12,18 +12,23 @@ import org.infinispan.manager.DefaultCacheManager;
  * @author Jiri Holusa
  */
 @ApplicationScoped
-public class JBossASCacheContainerProvider implements CacheContainerProvider {
+public abstract class FileCacheContainerProvider implements CacheContainerProvider {
    
    private BasicCacheContainer manager;
 
    @Override
-   public BasicCacheContainer getCacheContainer() throws IOException {
+   public BasicCacheContainer getCacheContainer(){
      if (manager == null) {         
-         manager = new DefaultCacheManager("infinispan.xml");         
+         try {  
+             //TODO: change to file cache manager
+             manager = new DefaultCacheManager("infinispan.xml");
+         } catch (IOException ex) {
+             //TODO: do something
+         }
          manager.start();           
       }
       
-      return null;
+      return manager;
    }
 
    @PreDestroy
@@ -31,4 +36,6 @@ public class JBossASCacheContainerProvider implements CacheContainerProvider {
       manager.stop();
       manager = null;
    }
+
+   
 }

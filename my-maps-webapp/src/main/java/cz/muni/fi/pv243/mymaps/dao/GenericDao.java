@@ -4,15 +4,18 @@ import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
 import cz.muni.fi.pv243.mymaps.webapp.session.CacheContainerProvider;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.infinispan.api.BasicCache;
 
 @Model
-@ManagedBean
 @Dependent
 public class GenericDao<T extends AbstractEntity>{
     protected Class<T> entityClass;
@@ -30,24 +33,45 @@ public class GenericDao<T extends AbstractEntity>{
         entityClass = (Class<T>) type.getActualTypeArguments()[0];         
     }
     
-    public T create(T entity) {
-        
+    public T create(T entity) {        
         if(cache == null){
             //TODO: write exception text
             throw new IllegalStateException();
-        }        
+        }    
+        
+        if(entity.getId() != null){
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
         
         try {               
-            utx.begin();  
-            Long id = Collections.max(cache.keySet());
+            utx.begin();
+            
+            Long id;
+            if(!cache.keySet().isEmpty()){
+                id = Collections.max(cache.keySet()) + 1;
+            }
+            else{
+                id = 1L;
+            }
+            
             cache.put(id, entity);
             entity.setId(id);
             utx.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException | 
+                 SystemException | 
+                 RollbackException | 
+                 HeuristicMixedException | 
+                 HeuristicRollbackException | 
+                 SecurityException | 
+                 IllegalStateException e) { 
+            
             if (utx != null) {
                 try {
                     utx.rollback();
-                } catch (Exception e1) {
+                } catch (IllegalStateException | 
+                         SecurityException | 
+                         SystemException e1) {
                     //TODO: handle exception
                 }
             }
@@ -60,7 +84,12 @@ public class GenericDao<T extends AbstractEntity>{
         if(cache == null){
             //TODO: write exception text
             throw new IllegalStateException();
-        }        
+        }   
+        
+        if(entity.getId() == null){
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
         
         try {
             utx.begin();            
@@ -81,7 +110,12 @@ public class GenericDao<T extends AbstractEntity>{
         if(cache == null){
             //TODO: write exception text
             throw new IllegalStateException();
-        }        
+        }   
+        
+        if(entity.getId() == null){
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
         
         try {
             utx.begin();            
@@ -105,6 +139,11 @@ public class GenericDao<T extends AbstractEntity>{
             //TODO: write exception text
             throw new IllegalStateException();
         } 
+        
+        if(id == null){
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
        
         return cache.get(id);
     }
