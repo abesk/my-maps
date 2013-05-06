@@ -1,3 +1,5 @@
 /my-maps-webapp/target/
 /my-maps-backend/target/
 /my-maps-model/target/
+/my-maps-datalayer/target/
+/my-maps-servicelayer/target/

@@ -7,36 +7,16 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
+    <name>my-maps-webapp</name>
     <artifactId>my-maps-webapp</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>war</packaging>    
     
-    <name>my-maps-webapp</name>
-
-    <properties>        
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.arquillian>1.0.3.Final</version.arquillian>
-        <version.arquillian.container>1.0.0.CR3</version.arquillian.container>
-        <version.weld>1.1.5.Final</version.weld>
-        <version.infinispan>5.2.5.Final</version.infinispan>
-        <version.junit>4.10</version.junit>
-        <version.specs>3.0.1.Final</version.specs>
-        <version.maven.surefire>2.11</version.maven.surefire>
+    <properties>
+        <version.maven.surefire>2.11</version.maven.surefire> 
     </properties>
     
-    <dependencyManagement>
-        <dependencies>            
-           <dependency>
-              <groupId>org.jboss.arquillian</groupId>
-              <artifactId>arquillian-bom</artifactId>
-              <version>${version.arquillian}</version>
-              <scope>import</scope>
-              <type>pom</type>
-           </dependency>
-        </dependencies>
-     </dependencyManagement>
-     
-     <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -86,101 +66,19 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-6.0</artifactId>
-            <version>1.0.0.Final</version>
-            <type>pom</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
-            <version>${version.arquillian.container}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-core</artifactId>
-            <version>${version.weld}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-core</artifactId>
-            <version>${version.infinispan}</version>
-        </dependency>
-        
+    <dependencies>        
         <dependency>
             <groupId>my-maps</groupId>
-            <artifactId>my-maps-model</artifactId>
+            <artifactId>my-maps-datalayer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>        
         <dependency>
             <groupId>my-maps</groupId>
-            <artifactId>my-maps-backend</artifactId>
+            <artifactId>my-maps-servicelayer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>        
     </dependencies>
     
-    <profiles>
-      <profile>
-         <id>jboss-public-repository</id>
-         <activation>
-            <property>
-               <name>jboss-public-repository</name>
-               <value>!false</value>
-            </property>
-         </activation>
-         <repositories>
-            <repository>
-               <id>jboss-public-repository-group</id>
-               <name>JBoss Public Maven Repository Group</name>
-               <url>http://repository.jboss.org/nexus/content/groups/public</url>
-               <releases>
-                  <enabled>true</enabled>
-                  <updatePolicy>never</updatePolicy>
-               </releases>
-               <snapshots>
-                  <enabled>true</enabled>
-                  <updatePolicy>never</updatePolicy>
-               </snapshots>
-            </repository>
-         </repositories>
-         <pluginRepositories>
-            <pluginRepository>
-               <id>jboss-public-repository-group</id>
-               <name>JBoss Public Maven Repository Group</name>
-               <url>http://repository.jboss.org/nexus/content/groups/public</url>
-               <releases>
-                  <enabled>true</enabled>
-                  <updatePolicy>never</updatePolicy>
-               </releases>
-               <snapshots>
-                  <enabled>false</enabled>
-                  <updatePolicy>never</updatePolicy>
-               </snapshots>
-            </pluginRepository>
-         </pluginRepositories>
-      </profile>
-   </profiles>   
+      
 
 </project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>my-maps</artifactId>
+        <groupId>my-maps</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <name>my-maps-servicelayer</name>
+    <artifactId>my-maps-servicelayer</artifactId>
+    <groupId>my-maps</groupId>    
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    
+    <dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency> 
+        <dependency>
+            <groupId>my-maps</groupId>
+            <artifactId>my-maps-datalayer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>       
+    </dependencies>
+    
+</project>
