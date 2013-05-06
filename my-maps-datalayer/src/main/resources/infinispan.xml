@@ -9,7 +9,16 @@
         <transaction transactionMode="TRANSACTIONAL" />            
     </default>
     
-    <namedCache name="testCache">
+    <namedCache name="MapPermission">
+        <transaction transactionMode="TRANSACTIONAL" />        
+    </namedCache>
+    <namedCache name="PointOfInterest">
+        <transaction transactionMode="TRANSACTIONAL" />        
+    </namedCache>
+    <namedCache name="User">
+        <transaction transactionMode="TRANSACTIONAL" />        
+    </namedCache>
+    <namedCache name="View">
         <transaction transactionMode="TRANSACTIONAL" />        
     </namedCache>
 

@@ -8,10 +8,9 @@ import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
 
 /**
  *
- * @param <T> 
- * @author Jiri Holusa
+ * @author andrej
  */
-public interface PointDao<T extends AbstractEntity> {
+public interface CRUDDao <T extends AbstractEntity> {
 
     T create(T entity);
 

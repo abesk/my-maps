@@ -11,7 +11,7 @@ import org.hibernate.search.annotations.*;
  *
  * @author Jiri Holusa
  */
-public class MapPermission extends AbstractEntity implements Serializable {
+public class MapPermissionEntity extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 19567189L;
     
     @Field

@@ -3,6 +3,7 @@ package cz.muni.fi.pv243.mymaps.dao;
 import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
 import cz.muni.fi.pv243.mymaps.caches.CacheContainerProvider;
 import java.util.Collections;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -10,12 +11,20 @@ import org.infinispan.api.BasicCache;
 
 @Model
 @Dependent
-public class GenericDao<T extends AbstractEntity>{
+public abstract class GenericDao<T extends AbstractEntity>{
     
     @Inject
     protected CacheContainerProvider provider;    
     
     protected BasicCache<Long, T> cache;
+    
+        
+    @PostConstruct
+    public void init(){
+        cache = provider.getCacheContainer().getCache(cacheName());
+    }
+    
+    protected abstract String cacheName();
     
     public T create(T entity) {        
         if(cache == null){
