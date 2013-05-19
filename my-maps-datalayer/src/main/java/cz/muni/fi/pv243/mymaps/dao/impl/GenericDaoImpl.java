@@ -11,88 +11,100 @@ import org.infinispan.api.BasicCache;
 
 @Model
 @Dependent
-public abstract class GenericDaoImpl<T extends AbstractEntity>{
-    
+public abstract class GenericDaoImpl<T extends AbstractEntity> {
+
     @Inject
-    protected CacheContainerProvider provider;    
+    protected CacheContainerProvider provider;
     
     protected BasicCache<Long, T> cache;
-    
-        
+
     @PostConstruct
-    public void init(){
+    public void init() {
         cache = provider.getCacheContainer().getCache(cacheName());
     }
-    
+
     protected abstract String cacheName();
-    
-    public T create(T entity) {        
-        if(cache == null){
+
+    public T create(T entity) {
+        if (cache == null) {
             //TODO: write exception text
             throw new IllegalStateException();
-        }    
-        
-        if(entity.getId() != null){
+        }
+
+        if (entity == null) {
             //TODO: write exception text
             throw new IllegalArgumentException();
-        }        
-                 
-        Long id;
-        if(!cache.keySet().isEmpty()){
-            id = Collections.max(cache.keySet()) + 1;
         }
-        else{
+
+        if (entity.getId() != null) {
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
+
+        Long id;
+        if (!cache.keySet().isEmpty()) {
+            id = Collections.max(cache.keySet()) + 1;
+        } else {
             id = 1L;
         }
 
         cache.put(id, entity);
-        entity.setId(id);        
-        
+        entity.setId(id);
+
         return entity;
     }
 
     public void delete(T entity) {
-        if(cache == null){
+        if (cache == null) {
             //TODO: write exception text
             throw new IllegalStateException();
-        }   
-        
-        if(entity.getId() == null){
+        }
+
+        if (entity == null) {
             //TODO: write exception text
             throw new IllegalArgumentException();
-        }        
-                   
-        cache.remove(entity.getId());        
+        }
+
+        if (entity.getId() == null) {
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
+
+        cache.remove(entity.getId());
     }
 
     public T update(T entity) {
-        if(cache == null){
+        if (cache == null) {
             //TODO: write exception text
             throw new IllegalStateException();
-        }   
-        
-        if(entity.getId() == null){
+        }
+
+        if (entity == null) {
             //TODO: write exception text
             throw new IllegalArgumentException();
-        }        
-                 
+        }
+
+        if (entity.getId() == null) {
+            //TODO: write exception text
+            throw new IllegalArgumentException();
+        }
+
         cache.put(entity.getId(), entity);
-                
+
         return entity;
     }
 
     public T getById(Long id) {
-        if(cache == null){
+        if (cache == null) {
             //TODO: write exception text
             throw new IllegalStateException();
-        } 
-        
-        if(id == null){
+        }
+
+        if (id == null) {
             //TODO: write exception text
             throw new IllegalArgumentException();
         }
-       
+
         return cache.get(id);
     }
-
 }
