@@ -6,6 +6,6 @@ import cz.muni.fi.pv243.mymaps.entities.PointOfInterestEntity;
  *
  * @author andrej
  */
-public interface PointOfInterestDao extends CRUDDao<PointOfInterestEntity> {
+public interface PointOfInterestDao extends GenericDao<PointOfInterestEntity> {
     
 }

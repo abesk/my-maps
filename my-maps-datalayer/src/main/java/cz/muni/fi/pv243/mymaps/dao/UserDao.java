@@ -6,6 +6,6 @@ import cz.muni.fi.pv243.mymaps.entities.UserEntity;
  *
  * @author andrej
  */
-public interface UserDao extends CRUDDao<UserEntity> {
+public interface UserDao extends GenericDao<UserEntity> {
     
 }

@@ -6,6 +6,6 @@ import cz.muni.fi.pv243.mymaps.entities.MapPermissionEntity;
  *
  * @author andrej
  */
-public interface MapPermissionDao extends CRUDDao<MapPermissionEntity> {
+public interface MapPermissionDao extends GenericDao<MapPermissionEntity> {
     
 }

@@ -6,6 +6,6 @@ import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
  *
  * @author andrej
  */
-public interface ViewDao extends CRUDDao<ViewEntity> {
+public interface ViewDao extends GenericDao<ViewEntity> {
     
 }
