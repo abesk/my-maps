@@ -35,7 +35,7 @@ public class PointEntity extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pv243.mymaps.entities.PointEntity[ id=" + id + " ]";
+        return "PointEntity{" + "latitude=" + latitude + ", longitude=" + longitude + '}';
     }
-    
+
 }
