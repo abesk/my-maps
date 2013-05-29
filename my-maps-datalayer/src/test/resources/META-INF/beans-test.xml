@@ -6,4 +6,8 @@
     <alternatives>
         <class>cz.muni.fi.pv243.mymaps.caches.DefaultCacheContainerProvider</class>
     </alternatives>
+    
+    <interceptors>
+        <class>cz.muni.fi.pv243.mymaps.logging.LoggingInterceptor</class>
+    </interceptors>
 </beans>
