@@ -18,6 +18,9 @@ public class ViewEntity extends AbstractEntity implements Serializable {
 
     @Field
     private MapType mapType;
+    
+    @Field
+    private String name;
 
     public PointEntity getSouthWest() {
         return southWest;
@@ -41,6 +44,14 @@ public class ViewEntity extends AbstractEntity implements Serializable {
 
     public void setMapType(MapType mapType) {
         this.mapType = mapType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

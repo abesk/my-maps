@@ -11,11 +11,16 @@ public class UserEntity extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 19567189L;
     
     @Field
-    private String login;        
+    private String login;  
+    
     @Field
-    private String passwordHash;        
+    private String passwordHash; 
+    
     @Field
-    private String name;        
+    private String name;    
+    
+    @Field
+    private String role;
 
     public String getLogin() {
         return login;
@@ -39,6 +44,14 @@ public class UserEntity extends AbstractEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

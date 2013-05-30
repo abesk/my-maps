@@ -11,6 +11,13 @@ import javax.inject.Inject;
 import org.infinispan.api.BasicCache;
 import org.jboss.logging.Logger;
 
+/**
+ * This class avoids redundancy of CRUD operations in every DAO object.
+ * Instead it uses generics to operate with every entity in the same way.
+ * 
+ * @author Jiri Holusa
+ * @param <T> 
+ */
 @Model
 @Dependent
 public abstract class GenericDaoImpl<T extends AbstractEntity> {

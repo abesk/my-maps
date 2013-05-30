@@ -12,6 +12,12 @@ public class PointOfInterestEntity extends AbstractEntity implements Serializabl
     
     @Field
     private PointEntity location;
+    
+    @Field
+    private String description;
+
+    @Field
+    private String iconPath;
 
     public PointEntity getLocation() {
         return location;
@@ -19,6 +25,22 @@ public class PointOfInterestEntity extends AbstractEntity implements Serializabl
 
     public void setLocation(PointEntity location) {
         this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
     @Override
