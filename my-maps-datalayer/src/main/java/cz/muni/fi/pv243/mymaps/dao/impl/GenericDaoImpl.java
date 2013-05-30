@@ -39,19 +39,22 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
 
     @Logged
     public T create(T entity) {        
-        if (cache == null) {
-            //TODO: write exception text
-            throw new IllegalStateException();
+        if (cache == null) {   
+            String msg = "Internal error: cache is null.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
 
         if (entity == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Entity cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         if (entity.getId() != null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Enitiy's ID must be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         Long id;
@@ -70,18 +73,21 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
     @Logged
     public void delete(T entity) {
         if (cache == null) {
-            //TODO: write exception text
-            throw new IllegalStateException();
+            String msg = "Internal error: cache is null.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
 
         if (entity == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Entity cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         if (entity.getId() == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Entity's ID cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         cache.remove(entity.getId());
@@ -90,18 +96,21 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
     @Logged
     public T update(T entity) {
         if (cache == null) {
-            //TODO: write exception text
-            throw new IllegalStateException();
+            String msg = "Internal error: cache is null.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
 
         if (entity == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Entity cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         if (entity.getId() == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "Entity's ID cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         cache.put(entity.getId(), entity);
@@ -112,13 +121,15 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
     @Logged
     public T getById(Long id) {
         if (cache == null) {
-            //TODO: write exception text
-            throw new IllegalStateException();
+            String msg = "Internal error: cache is null.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
 
         if (id == null) {
-            //TODO: write exception text
-            throw new IllegalArgumentException();
+            String msg = "ID cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         return cache.get(id);
