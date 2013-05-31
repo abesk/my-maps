@@ -1,7 +1,11 @@
 package cz.muni.fi.pv243.mymaps.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  *
@@ -21,6 +25,9 @@ public class UserEntity extends AbstractEntity implements Serializable {
     
     @Field
     private String role;
+    
+    @IndexedEmbedded
+    private Collection<ViewEntity> views;
 
     public String getLogin() {
         return login;
@@ -52,6 +59,15 @@ public class UserEntity extends AbstractEntity implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Collection<ViewEntity> getViews() {
+        return Collections.unmodifiableCollection(views);
+    }
+
+    public void setViews(Collection<ViewEntity> views) {
+        this.views = new ArrayList<>();
+        this.views.addAll(views);        
     }
 
     @Override
