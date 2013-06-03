@@ -14,6 +14,7 @@ import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class ViewServiceImpl implements ViewService {
 
+    @Inject
     private ViewDao viewDao;
 
     @Override

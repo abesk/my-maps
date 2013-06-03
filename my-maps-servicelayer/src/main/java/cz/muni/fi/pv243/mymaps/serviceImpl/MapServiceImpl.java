@@ -19,6 +19,7 @@ import cz.muni.fi.pv243.mymaps.service.MapService;
 import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
@@ -26,8 +27,13 @@ import java.util.List;
  */
 public class MapServiceImpl implements MapService {
 
+    @Inject
     private MyMapDao myMapDao;
+    
+    @Inject
     private MapPermissionDao mapPermissionDao;
+    
+    @Inject
     private PointOfInterestDao pointOfInterestDao;
 
     @Override

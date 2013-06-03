@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  *
@@ -26,9 +27,16 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
+    @Inject
     private UserDao userDao;
+    
+    @Inject
     private PasswordGenerator passwordGenerator;
+    
+    @Inject
     private MapPermissionDao mapPermissionDao;
+    
+    @Inject
     private MyMapDao myMapDao;
 
     @Override
