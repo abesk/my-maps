@@ -18,7 +18,7 @@ public interface MyMapDao extends GenericDao<MyMapEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when name == null or name.length == 0
      * @param name name of the map to be searched
-     * @return list of corresponding maps or null if no corresponding name is found
+     * @return list of maps with name equal to the name suplied
      */
     List<MyMapEntity> findMapsByName(String name);
     
@@ -28,7 +28,7 @@ public interface MyMapDao extends GenericDao<MyMapEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when exactDate == null
      * @param exactDate date of the map to be searched
-     * @return list of corresponding maps or null if no corresponding map is found
+     * @return list of maps created exactly on given date
      */
     List<MyMapEntity> findMapsByCreationDate(Date exactDate);
     
@@ -36,10 +36,10 @@ public interface MyMapDao extends GenericDao<MyMapEntity> {
      * Retrieves list of maps whose creation date belongs into the interval (from, to).
      * 
      * @throws IllegalStateException when data layer is not available due to internal error
-     * @throws IllegalArgumentException when from == null or to == null
-     * @param from from which date the map should be searched
-     * @param to to which date the map should be searched
-     * @return list of corresponding maps or null if no corresponding map is found
+     * @throws IllegalArgumentException when from == null or to == null or from > to
+     * @param from from which date the map should be searched, must be less than or equal to date to
+     * @param to to which date the map should be searched, must be greater than or equal to date from
+     * @return list of maps created within given time range
      */
     List<MyMapEntity> findMapsByCreationDate(Date from, Date to);
     
@@ -49,7 +49,7 @@ public interface MyMapDao extends GenericDao<MyMapEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when creator == null 
      * @param creator creator of the maps to be searched
-     * @return  list of corresponding maps or null if no corresponding map is found
+     * @return  list of maps created by given user
      */
     List<MyMapEntity> findMapsByCreator(UserEntity creator);
 }

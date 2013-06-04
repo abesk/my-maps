@@ -36,7 +36,7 @@ public class MyMapEntity extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pv243.mymaps.entities.MyMapEntity[ id=" + id + " ]";
+        return "MyMapEntity{" + "name=" + name + ", view=" + view + ", creationDate=" + creationDate + ", creator=" + creator + '}';
     }
 
     public String getName() {

@@ -56,7 +56,7 @@ public class ViewEntity extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "ViewEntity{" + "southWest=" + southWest + ", northEast=" + northEast + ", mapType=" + mapType + '}';
+        return "ViewEntity{" + "name=" + name + ", " + "southWest=" + southWest + ", northEast=" + northEast + ", mapType=" + mapType + '}';
     }
  
 }

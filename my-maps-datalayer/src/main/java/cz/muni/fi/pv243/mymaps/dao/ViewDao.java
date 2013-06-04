@@ -16,7 +16,7 @@ public interface ViewDao extends GenericDao<ViewEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when name == null or name.length == 0
      * @param name name to be searched
-     * @return list of corresponding views or null if no name is found
+     * @return list of views with name equal to the name suplied
      */
     List<ViewEntity> findViewsByName(String name);
 }
