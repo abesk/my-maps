@@ -1,8 +1,10 @@
 package cz.muni.fi.pv243.mymaps.dao.impl;
 
 import cz.muni.fi.pv243.mymaps.entities.UserEntity;
+import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -52,16 +54,16 @@ public class UserDaoImplTest {
 
         UserEntity result = instance.create(entity);
 
-        assertNotNull("Created entity id must be non-null.", entity.getId());
+        assertNotNull("Created entity id must be non-null.", result.getId());
         assertTrue(instance.cache.size() == 1);
-        assertNotNull(instance.cache.get(entity.getId()));
+        assertNotNull(instance.cache.get(result.getId()));
+        assertEquals(entity, result);
+        assertTrue(EqualsBuilder.reflectionEquals(entity, result));
 
         ArrayList<UserEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(entity, result);
-        assertEquals(entity, list.get(0));
-        EqualsBuilder.reflectionEquals(entity, result);
-        EqualsBuilder.reflectionEquals(entity, list.get(0));
+        assertEquals(result, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(result, list.get(0)));
     }
 
     @Test
@@ -92,14 +94,14 @@ public class UserDaoImplTest {
         UserEntity updated = createUpdatedEntity(entity);
         UserEntity result = instance.update(updated);
         assertNotNull("Updated entity id must be non-null.", result.getId());
+        assertEquals(updated, result);
+        assertTrue(EqualsBuilder.reflectionEquals(updated, result));
 
         assertTrue(instance.cache.size() == 1);
         ArrayList<UserEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(updated, result);
         assertEquals(updated, list.get(0));
-        EqualsBuilder.reflectionEquals(updated, result);
-        EqualsBuilder.reflectionEquals(updated, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(updated, list.get(0)));
     }
 
     @Test
@@ -118,11 +120,125 @@ public class UserDaoImplTest {
 
 
         assertEquals(result, createdEntity);
-        EqualsBuilder.reflectionEquals(result, createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(result, createdEntity));
 
         assertEquals(instance.cache.get(resultId), createdEntity);
-        EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity));
 
+    }
+
+    public void testGetUserByLogin() {
+        assertTrue(instance.cache.isEmpty());
+        UserEntity entity = createNewEntity();
+        entity.setLogin("login");
+
+        UserEntity createdEntity = instance.create(entity);
+        Long resultId = createdEntity.getId();
+        assertNotNull(resultId);
+
+
+        assertNull(instance.getUserByLogin("xlogin2"));
+
+        UserEntity result = instance.getUserByLogin("login");
+        assertNotNull(result);
+        assertNotNull(result.getId());
+
+
+        assertEquals(result, createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(result, createdEntity));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByLoginNull() {
+        instance.getUserByLogin(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserByLoginEmpty() {
+        instance.getUserByLogin("");
+    }
+
+    @Test
+    public void testFindUsersByName() {
+
+        assertTrue(instance.cache.isEmpty());
+        UserEntity entity = createNewEntity();
+        entity.setName("test1");
+        UserEntity entity2 = createNewEntity();
+        entity2.setName("test2");
+        UserEntity entity3 = createNewEntity();
+        entity3.setName("test3");
+
+        instance.create(entity);
+        UserEntity createdEntity2 = instance.create(entity2);
+        instance.create(entity3);
+
+        List<UserEntity> foundEntities;
+
+        foundEntities = instance.findUsersByName("xxxx");
+
+        assertNotNull(foundEntities);
+        assertEquals(0, foundEntities.size());
+
+        foundEntities = instance.findUsersByName("test2");
+
+        assertNotNull(foundEntities);
+        assertEquals(1, foundEntities.size());
+
+        assertEquals(createdEntity2, foundEntities.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(createdEntity2, foundEntities.get(0)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindUsersByNameNull() {
+        instance.findUsersByName(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindUsersByNameEmpty() {
+        instance.findUsersByName("");
+    }
+
+    @Test
+    public void testFindUsersByRole() {
+
+        assertTrue(instance.cache.isEmpty());
+        UserEntity entity = createNewEntity();
+        entity.setRole("test1");
+        UserEntity entity2 = createNewEntity();
+        entity2.setRole("test2");
+        UserEntity entity3 = createNewEntity();
+        entity3.setRole("test3");
+
+        instance.create(entity);
+        UserEntity createdEntity2 = instance.create(entity2);
+        instance.create(entity3);
+
+        List<UserEntity> foundEntities;
+
+        foundEntities = instance.findUsersByRole("xxxx");
+
+        assertNotNull(foundEntities);
+        assertEquals(0, foundEntities.size());
+
+        foundEntities = instance.findUsersByRole("test2");
+
+        assertNotNull(foundEntities);
+        assertEquals(1, foundEntities.size());
+
+        assertEquals(createdEntity2, foundEntities.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(createdEntity2, foundEntities.get(0)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindUsersByRoleNull() {
+        instance.findUsersByRole(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindUsersByRoleEmpty() {
+        instance.findUsersByRole("");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -164,16 +280,26 @@ public class UserDaoImplTest {
 
     private UserEntity createUpdatedEntity(UserEntity entity) {
 
+        UserEntity updatedEntity = new UserEntity();
 
-        //TODO: clone entity to new one and change some attributes
+        updatedEntity.setId(entity.getId());
+        updatedEntity.setLogin("loginxy");
+        updatedEntity.setName("other user name");
+        updatedEntity.setPasswordHash("1234567");
+        updatedEntity.setRole("user");
+        updatedEntity.setViews(new ArrayList<ViewEntity>());
 
-        return entity;
+        return updatedEntity;
     }
 
     private UserEntity createNewEntity() {
         UserEntity userEntity = new UserEntity();
 
-        //TODO: set some attributes
+        userEntity.setLogin("login");
+        userEntity.setName("user name");
+        userEntity.setPasswordHash("123456");
+        userEntity.setRole("admin");
+        userEntity.setViews(new ArrayList<ViewEntity>());
 
         return userEntity;
     }

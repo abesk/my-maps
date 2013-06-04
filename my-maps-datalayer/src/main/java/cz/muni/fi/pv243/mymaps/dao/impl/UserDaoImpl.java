@@ -74,10 +74,6 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity> implements UserDao {
             }
         }
         
-        if(result.isEmpty()){
-            return null;
-        }
-        
         return result;
     }    
 
@@ -106,10 +102,6 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity> implements UserDao {
             if(user.getRole().equals(role)){
                 result.add(user);
             }
-        }
-        
-        if(result.isEmpty()){
-            return null;
         }
         
         return result;
