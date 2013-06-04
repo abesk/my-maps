@@ -72,7 +72,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "UserEntity{" + "login=" + login + ", passwordHash=" + passwordHash + ", name=" + name + '}';
+        return "UserEntity{" + "login=" + login + ", passwordHash=" + passwordHash + ", name=" + name + ", role=" + role + '}';
     }
-    
+
 }

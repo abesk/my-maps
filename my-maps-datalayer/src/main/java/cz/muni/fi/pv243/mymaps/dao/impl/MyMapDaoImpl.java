@@ -47,10 +47,6 @@ public class MyMapDaoImpl extends GenericDaoImpl<MyMapEntity> implements MyMapDa
             }
         }
         
-        if(result.isEmpty()){
-            return null;
-        }
-        
         return result;
     }
 
@@ -73,10 +69,6 @@ public class MyMapDaoImpl extends GenericDaoImpl<MyMapEntity> implements MyMapDa
             if(map.getCreationDate().equals(exactDate)){
                 result.add(map);
             }
-        }
-        
-        if(result.isEmpty()){
-            return null;
         }
         
         return result;
@@ -102,15 +94,19 @@ public class MyMapDaoImpl extends GenericDaoImpl<MyMapEntity> implements MyMapDa
             throw new IllegalArgumentException(msg);
         } 
         
+        if (from.compareTo(to) > 0) {
+            String msg = "Date (from) cannot be greater than date (to).";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+        }
+
         List<MyMapEntity> result = new ArrayList<>();
         for(MyMapEntity map: cache.values()){
-            if(map.getCreationDate().after(from) && map.getCreationDate().before(to)){
+            if (map.getCreationDate().equals(from)
+                    || map.getCreationDate().equals(to)
+                    || (map.getCreationDate().after(from) && map.getCreationDate().before(to))) {
                 result.add(map);
             }
-        }
-        
-        if(result.isEmpty()){
-            return null;
         }
         
         return result;
@@ -141,10 +137,6 @@ public class MyMapDaoImpl extends GenericDaoImpl<MyMapEntity> implements MyMapDa
             if(map.getCreator().equals(creator)){
                 result.add(map);
             }
-        }
-        
-        if(result.isEmpty()){
-            return null;
         }
         
         return result;

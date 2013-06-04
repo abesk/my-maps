@@ -45,7 +45,7 @@ public class PointOfInterestEntity extends AbstractEntity implements Serializabl
 
     @Override
     public String toString() {
-        return "PointOfInterestEntity{" + "location=" + location + '}';
+        return "PointOfInterestEntity{" + "location=" + location + ", description=" + description + ", iconPath=" + iconPath + '}';
     }
 
 }

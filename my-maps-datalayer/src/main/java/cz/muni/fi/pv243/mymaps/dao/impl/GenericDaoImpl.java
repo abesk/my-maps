@@ -52,7 +52,7 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
         }
 
         if (entity.getId() != null) {
-            String msg = "Enitiy's ID must be null.";
+            String msg = "Entity's ID must be null.";
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }

@@ -18,7 +18,7 @@ public interface MapPermissionDao extends GenericDao<MapPermissionEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when user == null or user.getId() == null
      * @param user user whose permissions to be retrieved
-     * @return list of permissions or null when no permission is found
+     * @return list of permissions for given user
      */
     List<MapPermissionEntity> getUsersPermissions(UserEntity user);
     
@@ -28,7 +28,7 @@ public interface MapPermissionDao extends GenericDao<MapPermissionEntity> {
      * @throws IllegalStateException when data layer is not available due to internal error
      * @throws IllegalArgumentException when map == null or map.getId() == null
      * @param map map whose permissions to be retrieved
-     * @return list of permissions or null when no permission is found
+     * @return list of permissions on given map
      */
     List<MapPermissionEntity> getMapsPermissions(MyMapEntity map);
     

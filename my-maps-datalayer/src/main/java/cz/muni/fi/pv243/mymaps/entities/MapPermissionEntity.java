@@ -45,7 +45,7 @@ public class MapPermissionEntity extends AbstractEntity implements Serializable 
 
     @Override
     public String toString() {
-        return "cz.muni.fi.pv243.mymaps.entities.MapPermission[ id=" + id + " ]";
+        return "MapPermissionEntity{" + "user=" + user + ", map=" + map + ", permission=" + permission + '}';
     }
-    
+
 }

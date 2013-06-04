@@ -1,8 +1,12 @@
 package cz.muni.fi.pv243.mymaps.dao.impl;
 
+import cz.muni.fi.pv243.mymaps.entities.MapType;
+import cz.muni.fi.pv243.mymaps.entities.PointEntity;
 import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -52,16 +56,16 @@ public class ViewDaoImplTest {
 
         ViewEntity result = instance.create(entity);
 
-        assertNotNull("Created entity id must be non-null.", entity.getId());
+        assertNotNull("Created entity id must be non-null.", result.getId());
         assertTrue(instance.cache.size() == 1);
-        assertNotNull(instance.cache.get(entity.getId()));
+        assertNotNull(instance.cache.get(result.getId()));
+        assertEquals(entity, result);
+        assertTrue(EqualsBuilder.reflectionEquals(entity, result));
 
         ArrayList<ViewEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(entity, result);
-        assertEquals(entity, list.get(0));
-        EqualsBuilder.reflectionEquals(entity, result);
-        EqualsBuilder.reflectionEquals(entity, list.get(0));
+        assertEquals(result, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(result, list.get(0)));
     }
 
     @Test
@@ -92,14 +96,14 @@ public class ViewDaoImplTest {
         ViewEntity updated = createUpdatedEntity(entity);
         ViewEntity result = instance.update(updated);
         assertNotNull("Updated entity id must be non-null.", result.getId());
+        assertEquals(updated, result);
+        assertTrue(EqualsBuilder.reflectionEquals(updated, result));
 
         assertTrue(instance.cache.size() == 1);
         ArrayList<ViewEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(updated, result);
         assertEquals(updated, list.get(0));
-        EqualsBuilder.reflectionEquals(updated, result);
-        EqualsBuilder.reflectionEquals(updated, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(updated, list.get(0)));
     }
 
     @Test
@@ -118,10 +122,34 @@ public class ViewDaoImplTest {
 
 
         assertEquals(result, createdEntity);
-        EqualsBuilder.reflectionEquals(result, createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(result, createdEntity));
 
         assertEquals(instance.cache.get(resultId), createdEntity);
-        EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity));
+    }
+
+    @Test
+    public void testFindViewsByName() {
+
+        assertTrue(instance.cache.isEmpty());
+        ViewEntity entity = createNewEntity();
+        entity.setName("test1");
+        ViewEntity entity2 = createNewEntity();
+        entity2.setName("test2");
+        ViewEntity entity3 = createNewEntity();
+        entity3.setName("test3");
+
+        instance.create(entity);
+        ViewEntity createdEntity2 = instance.create(entity2);
+        instance.create(entity3);
+
+        List<ViewEntity> foundEntities = instance.findViewsByName("test2");
+
+        assertNotNull(foundEntities);
+        assertEquals(foundEntities.size(), 1);
+
+        assertEquals(foundEntities.get(0), createdEntity2);
+        assertTrue(EqualsBuilder.reflectionEquals(foundEntities.get(0), createdEntity2));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -161,19 +189,53 @@ public class ViewDaoImplTest {
         instance.getById(null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindViewsByNameNull() {
+        instance.findViewsByName(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindViewsByNameEmpty() {
+        instance.findViewsByName("");
+    }
+
     private ViewEntity createUpdatedEntity(ViewEntity entity) {
+        ViewEntity updatedEntity = new ViewEntity();
 
+        updatedEntity.setId(entity.getId());
 
-        //TODO: clone entity to new one and change some attributes
+        PointEntity pointNE = new PointEntity();
+        pointNE.setLatitude(BigDecimal.ONE);
+        pointNE.setLongitude(BigDecimal.ONE);
 
-        return entity;
+        PointEntity pointSW = new PointEntity();
+        pointSW.setLatitude(BigDecimal.ONE);
+        pointSW.setLongitude(BigDecimal.ONE);
+
+        updatedEntity.setNorthEast(pointNE);
+        updatedEntity.setSouthWest(pointSW);
+        updatedEntity.setMapType(MapType.HYBRID);
+        updatedEntity.setName("default_view2");
+
+        return updatedEntity;
     }
 
     private ViewEntity createNewEntity() {
-        ViewEntity userEntity = new ViewEntity();
+        ViewEntity entity = new ViewEntity();
 
-        //TODO: set some attributes
+        PointEntity pointNE = new PointEntity();
+        pointNE.setLatitude(BigDecimal.ZERO);
+        pointNE.setLongitude(BigDecimal.ZERO);
 
-        return userEntity;
+        PointEntity pointSW = new PointEntity();
+        pointSW.setLatitude(BigDecimal.ZERO);
+        pointSW.setLongitude(BigDecimal.ZERO);
+
+        entity.setNorthEast(pointNE);
+        entity.setSouthWest(pointSW);
+        entity.setMapType(MapType.ROADMAP);
+        entity.setName("default_view");
+
+        return entity;
     }
 }

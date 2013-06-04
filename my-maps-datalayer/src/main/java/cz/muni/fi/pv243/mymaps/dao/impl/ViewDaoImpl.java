@@ -45,10 +45,6 @@ public class ViewDaoImpl extends GenericDaoImpl<ViewEntity> implements ViewDao {
             }
         }
         
-        if(result.isEmpty()){
-            return null;
-        }
-        
         return result;
     }    
     

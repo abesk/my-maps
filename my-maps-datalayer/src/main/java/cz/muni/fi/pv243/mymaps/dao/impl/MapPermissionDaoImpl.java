@@ -47,10 +47,6 @@ public class MapPermissionDaoImpl extends GenericDaoImpl<MapPermissionEntity> im
             }
         }
         
-        if(result.isEmpty()){
-            return null;
-        }
-        
         return result;
     }
 
@@ -79,10 +75,6 @@ public class MapPermissionDaoImpl extends GenericDaoImpl<MapPermissionEntity> im
             if(permission.getMap().equals(map)){
                 result.add(permission);
             }
-        }
-        
-        if(result.isEmpty()){
-            return null;
         }
         
         return result;

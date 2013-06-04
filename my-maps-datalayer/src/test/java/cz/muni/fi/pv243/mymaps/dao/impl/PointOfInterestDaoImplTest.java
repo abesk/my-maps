@@ -1,6 +1,8 @@
 package cz.muni.fi.pv243.mymaps.dao.impl;
 
+import cz.muni.fi.pv243.mymaps.entities.PointEntity;
 import cz.muni.fi.pv243.mymaps.entities.PointOfInterestEntity;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.inject.Inject;
@@ -52,16 +54,16 @@ public class PointOfInterestDaoImplTest {
 
         PointOfInterestEntity result = instance.create(entity);
 
-        assertNotNull("Created entity id must be non-null.", entity.getId());
+        assertNotNull("Created entity id must be non-null.", result.getId());
         assertTrue(instance.cache.size() == 1);
-        assertNotNull(instance.cache.get(entity.getId()));
+        assertNotNull(instance.cache.get(result.getId()));
+        assertEquals(entity, result);
+        assertTrue(EqualsBuilder.reflectionEquals(entity, result));
 
         ArrayList<PointOfInterestEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(entity, result);
-        assertEquals(entity, list.get(0));
-        EqualsBuilder.reflectionEquals(entity, result);
-        EqualsBuilder.reflectionEquals(entity, list.get(0));
+        assertEquals(result, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(result, list.get(0)));
     }
 
     @Test
@@ -92,14 +94,14 @@ public class PointOfInterestDaoImplTest {
         PointOfInterestEntity updated = createUpdatedEntity(entity);
         PointOfInterestEntity result = instance.update(updated);
         assertNotNull("Updated entity id must be non-null.", result.getId());
+        assertEquals(updated, result);
+        assertTrue(EqualsBuilder.reflectionEquals(updated, result));
 
         assertTrue(instance.cache.size() == 1);
         ArrayList<PointOfInterestEntity> list = Collections.list(Collections.enumeration(instance.cache.values()));
 
-        assertEquals(updated, result);
         assertEquals(updated, list.get(0));
-        EqualsBuilder.reflectionEquals(updated, result);
-        EqualsBuilder.reflectionEquals(updated, list.get(0));
+        assertTrue(EqualsBuilder.reflectionEquals(updated, list.get(0)));
     }
 
     @Test
@@ -118,10 +120,10 @@ public class PointOfInterestDaoImplTest {
 
 
         assertEquals(result, createdEntity);
-        EqualsBuilder.reflectionEquals(result, createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(result, createdEntity));
 
         assertEquals(instance.cache.get(resultId), createdEntity);
-        EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity);
+        assertTrue(EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity));
 
     }
 
@@ -164,16 +166,26 @@ public class PointOfInterestDaoImplTest {
 
     private PointOfInterestEntity createUpdatedEntity(PointOfInterestEntity entity) {
 
+        PointOfInterestEntity updatedEntity = new PointOfInterestEntity();
 
-        //TODO: clone entity to new one and change some attributes
+        updatedEntity.setId(entity.getId());
 
-        return entity;
+        PointEntity location = new PointEntity();
+        location.setLatitude(BigDecimal.ONE);
+        location.setLongitude(BigDecimal.ONE);
+        updatedEntity.setLocation(location);
+
+        return updatedEntity;
     }
 
     private PointOfInterestEntity createNewEntity() {
         PointOfInterestEntity userEntity = new PointOfInterestEntity();
 
-        //TODO: set some attributes
+        PointEntity location = new PointEntity();
+        location.setLatitude(BigDecimal.ZERO);
+        location.setLongitude(BigDecimal.ZERO);
+
+        userEntity.setLocation(location);
 
         return userEntity;
     }
