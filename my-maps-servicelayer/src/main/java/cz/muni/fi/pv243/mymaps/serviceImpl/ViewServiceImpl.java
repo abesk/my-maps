@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
+import org.jboss.logging.Logger;
 
 /**
  *
@@ -24,11 +25,15 @@ public class ViewServiceImpl implements ViewService {
 
     @Inject
     private ViewDao viewDao;
-
+    @Inject
+    protected Logger log;
+    
     @Override
     public void createView(View view) {
         if (view == null) {
-            throw new IllegalArgumentException("View can not be null.");
+            String msg = "View can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         ViewEntity newView = EntityDTOconvertor.convertView(view);
@@ -39,7 +44,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public void updateView(View view) {
         if (view == null) {
-            throw new IllegalArgumentException("View can not be null.");
+            String msg = "View can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         ViewEntity newView = EntityDTOconvertor.convertView(view);
@@ -50,7 +57,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public void deleteView(View view) {
         if (view == null) {
-            throw new IllegalArgumentException("View can not be null.");
+            String msg = "View can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         ViewEntity newView = EntityDTOconvertor.convertView(view);
@@ -61,7 +70,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public View getViewById(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID can not be null.");
+            String msg = "ID can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         return EntityDTOconvertor.convertView(viewDao.getById(id));
@@ -71,7 +82,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public List<View> findViewsByName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Name can not be null.");
+            String msg = "Name can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         List<ViewEntity> views = viewDao.findViewsByName(name);
@@ -86,7 +99,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public View getViewByMap(MyMap myMap) {
         if (myMap == null) {
-            throw new IllegalArgumentException("Map can not be null.");
+            String msg = "Map can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
         View view = myMap.getView();
 
@@ -96,7 +111,9 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public Collection<View> getViewsByUser(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         Collection<View> userViews = user.getViews();

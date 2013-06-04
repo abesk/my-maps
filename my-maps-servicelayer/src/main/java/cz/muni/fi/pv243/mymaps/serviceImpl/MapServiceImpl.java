@@ -6,22 +6,18 @@ package cz.muni.fi.pv243.mymaps.serviceImpl;
 
 import cz.muni.fi.pv243.mymaps.dao.MapPermissionDao;
 import cz.muni.fi.pv243.mymaps.dao.MyMapDao;
-import cz.muni.fi.pv243.mymaps.dao.PointOfInterestDao;
 import cz.muni.fi.pv243.mymaps.dto.MapPermission;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
-import cz.muni.fi.pv243.mymaps.dto.PointOfInterest;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.entities.MapPermissionEntity;
 import cz.muni.fi.pv243.mymaps.entities.MyMapEntity;
 import cz.muni.fi.pv243.mymaps.entities.Permission;
-import cz.muni.fi.pv243.mymaps.entities.PointOfInterestEntity;
 import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.service.MapService;
 import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import javax.transaction.UserTransaction;
 import org.jboss.logging.Logger;
 
 /**

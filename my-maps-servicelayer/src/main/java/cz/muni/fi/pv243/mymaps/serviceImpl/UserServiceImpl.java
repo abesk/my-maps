@@ -20,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import org.jboss.logging.Logger;
 
 /**
  *
@@ -29,36 +30,44 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserDao userDao;
-    
     @Inject
     private PasswordGenerator passwordGenerator;
-    
     @Inject
     private MapPermissionDao mapPermissionDao;
-    
     @Inject
     private MyMapDao myMapDao;
+    @Inject
+    protected Logger log;
 
     @Override
     public void createUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+        }
+        try {
+            String password = passwordGenerator.generatePassword(8, true, true);
+            password = Crypto.encode(password);
+            user.setPassword(password);
+
+            UserEntity newUser = EntityDTOconvertor.convertUser(user);
+
+            userDao.create(newUser);
+
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            log.error(e);
         }
 
-        String password = passwordGenerator.generatePassword(8, true, true);
-        password = Crypto.encode(password);
-        user.setPassword(password);
-
-        UserEntity newUser = EntityDTOconvertor.convertUser(user);
-
-        userDao.create(newUser);
 
     }
 
     @Override
     public void updateUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         if (!userDao.getById(user.getId()).getPasswordHash().equals(Crypto.encode(user.getPassword()))) {
@@ -73,7 +82,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         UserEntity newUser = EntityDTOconvertor.convertUser(user);
@@ -97,7 +108,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID can not be null.");
+            String msg = "ID can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         return EntityDTOconvertor.convertUser(userDao.getById(id));
@@ -106,18 +119,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String login) {
         if (login == null) {
-            throw new IllegalArgumentException("Login can not be null.");
+            String msg = "Login can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         UserEntity user = userDao.getUserByLogin(login);
-        
+
         return EntityDTOconvertor.convertUser(user);
     }
 
     @Override
     public List<User> findUsersByName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Name can not be null.");
+            String msg = "Name can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         List<User> userList = new ArrayList<>();
@@ -132,7 +149,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUsersByRole(String role) {
         if (role == null) {
-            throw new IllegalArgumentException("Role can not be null.");
+            String msg = "Role can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         List<User> userList = new ArrayList<>();
