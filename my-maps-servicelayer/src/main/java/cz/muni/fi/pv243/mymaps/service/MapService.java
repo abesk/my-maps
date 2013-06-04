@@ -8,7 +8,7 @@ import cz.muni.fi.pv243.mymaps.dto.MapPermission;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
 import cz.muni.fi.pv243.mymaps.dto.PointOfInterest;
 import cz.muni.fi.pv243.mymaps.dto.User;
-import cz.muni.fi.pv243.mymaps.dto.View;
+import cz.muni.fi.pv243.mymaps.entities.Permission;
 import java.util.List;
 
 /**
@@ -29,21 +29,11 @@ public interface MapService {
 
     public List<MapPermission> getMapPermissionsForUser(User user);
 
-    public void createMapPermission(MapPermission mapPermission);
+    public void addPermision(User user, MyMap myMap, Permission permission);
 
-    public void updateMapPermission(MapPermission mapPermission);
-
-    public void deleteMapPermission(MapPermission mapPermission);
+    public void removePermision(User user, MyMap myMap, Permission permission);
 
     public MapPermission getMapPermissionById(Long id);
 
     public List<MapPermission> getMapPermissionsForMap(MyMap myMap);
-
-    public void createPointOfInterest(PointOfInterest pointOfInterest);
-
-    public void updatePointOfInterest(PointOfInterest pointOfInterest);
-
-    public void deletePointOfInterest(PointOfInterest pointOfInterest);
-
-    public PointOfInterest getPointOfInterestById(Long id);
 }

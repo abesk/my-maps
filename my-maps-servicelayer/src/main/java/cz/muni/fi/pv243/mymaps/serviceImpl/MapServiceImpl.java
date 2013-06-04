@@ -13,6 +13,7 @@ import cz.muni.fi.pv243.mymaps.dto.PointOfInterest;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.entities.MapPermissionEntity;
 import cz.muni.fi.pv243.mymaps.entities.MyMapEntity;
+import cz.muni.fi.pv243.mymaps.entities.Permission;
 import cz.muni.fi.pv243.mymaps.entities.PointOfInterestEntity;
 import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.service.MapService;
@@ -20,6 +21,8 @@ import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.transaction.UserTransaction;
+import org.jboss.logging.Logger;
 
 /**
  *
@@ -29,28 +32,31 @@ public class MapServiceImpl implements MapService {
 
     @Inject
     private MyMapDao myMapDao;
-    
     @Inject
     private MapPermissionDao mapPermissionDao;
-    
     @Inject
-    private PointOfInterestDao pointOfInterestDao;
+    private Logger log;
 
     @Override
     public void createMap(MyMap myMap) {
         if (myMap == null) {
-            throw new IllegalArgumentException("Map can not be null.");
+            String msg = "Map can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         MyMapEntity newMyMap = EntityDTOconvertor.convertMyMap(myMap);
 
         myMapDao.create(newMyMap);
+
     }
 
     @Override
     public void updateMap(MyMap myMap) {
         if (myMap == null) {
-            throw new IllegalArgumentException("Map can not be null.");
+            String msg = "Map can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         MyMapEntity newMyMap = EntityDTOconvertor.convertMyMap(myMap);
@@ -61,7 +67,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public void deleteMap(MyMap myMap) {
         if (myMap == null) {
-            throw new IllegalArgumentException("Map can not be null.");
+            String msg = "Map can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         MyMapEntity myMapEntity = EntityDTOconvertor.convertMyMap(myMap);
@@ -78,7 +86,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public MyMap getMapById(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID can not be null.");
+            String msg = "ID can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         return EntityDTOconvertor.convertMyMap(myMapDao.getById(id));
@@ -87,7 +97,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public List<MyMap> getMapsByUser(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         UserEntity userEntity = EntityDTOconvertor.convertUser(user);
@@ -104,7 +116,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public List<MapPermission> getMapPermissionsForUser(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null.");
+            String msg = "User can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         UserEntity userEntity = EntityDTOconvertor.convertUser(user);
@@ -119,42 +133,45 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public void createMapPermission(MapPermission mapPermission) {
-        if (mapPermission == null) {
-            throw new IllegalArgumentException("Map permission can not be null.");
+    public void addPermision(User user, MyMap myMap, Permission permission) {
+        if (user == null || myMap == null || permission == null) {
+            String msg = "User, Map and Permission can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
-        MapPermissionEntity mapPermissionEntity = EntityDTOconvertor.convertMapPermission(mapPermission);
+        MapPermission mapPermission = new MapPermission();
+        mapPermission.setUser(user);
+        mapPermission.setMap(myMap);
+        mapPermission.setPermission(permission);
 
-        mapPermissionDao.create(mapPermissionEntity);
+        mapPermissionDao.create(EntityDTOconvertor.convertMapPermission(mapPermission));
+
     }
 
     @Override
-    public void updateMapPermission(MapPermission mapPermission) {
-        if (mapPermission == null) {
-            throw new IllegalArgumentException("Map permission can not be null.");
+    public void removePermision(User user, MyMap myMap, Permission permission) {
+        if (permission == null) {
+            String msg = "User, Map and Permission can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
-        MapPermissionEntity mapPermissionEntity = EntityDTOconvertor.convertMapPermission(mapPermission);
+        MapPermission mapPermission = new MapPermission();
+        mapPermission.setUser(user);
+        mapPermission.setMap(myMap);
+        mapPermission.setPermission(permission);
 
-        mapPermissionDao.update(mapPermissionEntity);
-    }
+        mapPermissionDao.delete(EntityDTOconvertor.convertMapPermission(mapPermission));
 
-    @Override
-    public void deleteMapPermission(MapPermission mapPermission) {
-        if (mapPermission == null) {
-            throw new IllegalArgumentException("Map permission can not be null.");
-        }
-
-        MapPermissionEntity mapPermissionEntity = EntityDTOconvertor.convertMapPermission(mapPermission);
-
-        mapPermissionDao.delete(mapPermissionEntity);
     }
 
     @Override
     public MapPermission getMapPermissionById(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID can not be null.");
+            String msg = "ID can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         return EntityDTOconvertor.convertMapPermission(mapPermissionDao.getById(id));
@@ -163,7 +180,9 @@ public class MapServiceImpl implements MapService {
     @Override
     public List<MapPermission> getMapPermissionsForMap(MyMap myMap) {
         if (myMap == null) {
-            throw new IllegalArgumentException("Map can not be null.");
+            String msg = "Map can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
         }
 
         MyMapEntity myMapEntity = EntityDTOconvertor.convertMyMap(myMap);
@@ -175,47 +194,5 @@ public class MapServiceImpl implements MapService {
         }
 
         return permissionList;
-    }
-
-    @Override
-    public void createPointOfInterest(PointOfInterest pointOfInterest) {
-        if (pointOfInterest == null) {
-            throw new IllegalArgumentException("Point Of Interest can not be null.");
-        }
-
-        PointOfInterestEntity pointOfInterestEntity = EntityDTOconvertor.convertPointOfInterest(pointOfInterest);
-
-        pointOfInterestDao.create(pointOfInterestEntity);
-    }
-
-    @Override
-    public void updatePointOfInterest(PointOfInterest pointOfInterest) {
-        if (pointOfInterest == null) {
-            throw new IllegalArgumentException("Point Of Interest can not be null.");
-        }
-
-        PointOfInterestEntity pointOfInterestEntity = EntityDTOconvertor.convertPointOfInterest(pointOfInterest);
-
-        pointOfInterestDao.update(pointOfInterestEntity);
-    }
-
-    @Override
-    public void deletePointOfInterest(PointOfInterest pointOfInterest) {
-        if (pointOfInterest == null) {
-            throw new IllegalArgumentException("Point Of Interest can not be null.");
-        }
-
-        PointOfInterestEntity pointOfInterestEntity = EntityDTOconvertor.convertPointOfInterest(pointOfInterest);
-
-        pointOfInterestDao.delete(pointOfInterestEntity);
-    }
-
-    @Override
-    public PointOfInterest getPointOfInterestById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("ID can not be null.");
-        }
-
-        return EntityDTOconvertor.convertPointOfInterest(pointOfInterestDao.getById(id));
     }
 }
