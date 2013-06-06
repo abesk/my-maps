@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.jboss.logging.Logger;
@@ -38,43 +39,53 @@ public class UserServiceImpl implements UserService {
     protected Logger log;
 
     @Override
-    public void createUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public String createUser(User user) {
         if (user == null) {
             String msg = "User can not be null.";
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
+        String password = passwordGenerator.generatePassword(8, true, true);
         try {
-            String password = passwordGenerator.generatePassword(8, true, true);
-            password = Crypto.encode(password);
-            user.setPassword(password);
+
+            String hashedPassword = Crypto.encode(password);
+            user.setPassword(hashedPassword);
 
             UserEntity newUser = EntityDTOconvertor.convertUser(user);
 
             userDao.create(newUser);
 
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            log.error(e);
+            String msg = "Internal error: Create user - Failed to hash password.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
         }
 
+        return password;
 
     }
 
     @Override
-    public void updateUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        if (user == null) {
-            String msg = "User can not be null.";
+    public void updateUser(User user) {
+        try {
+            if (user == null) {
+                String msg = "User can not be null.";
+                log.error(msg);
+                throw new IllegalArgumentException(msg);
+            }
+
+            if (!userDao.getById(user.getId()).getPasswordHash().equals(Crypto.encode(user.getPassword()))) {
+                user.setPassword(Crypto.encode(user.getPassword()));
+            }
+
+            UserEntity newUser = EntityDTOconvertor.convertUser(user);
+
+            userDao.update(newUser);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            String msg = "Internal error: Update user - Failed to hash password.";
             log.error(msg);
-            throw new IllegalArgumentException(msg);
+            throw new IllegalStateException(msg);
         }
-
-        if (!userDao.getById(user.getId()).getPasswordHash().equals(Crypto.encode(user.getPassword()))) {
-            user.setPassword(Crypto.encode(user.getPassword()));
-        }
-
-        UserEntity newUser = EntityDTOconvertor.convertUser(user);
-
-        userDao.update(newUser);
     }
 
     @Override

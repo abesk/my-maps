@@ -5,8 +5,6 @@
 package cz.muni.fi.pv243.mymaps.service;
 
 import cz.muni.fi.pv243.mymaps.dto.User;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -15,9 +13,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    public void createUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+    public String createUser(User user);
 
-    public void updateUser(User user) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+    public void updateUser(User user);
 
     public void deleteUser(User user);
     
