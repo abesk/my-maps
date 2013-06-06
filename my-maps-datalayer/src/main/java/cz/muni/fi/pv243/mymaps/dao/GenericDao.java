@@ -1,6 +1,7 @@
 package cz.muni.fi.pv243.mymaps.dao;
 
 import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
+import java.util.List;
 
 /**
  * Interface introduced to avoid redundancy of CRUD operations in every
@@ -39,6 +40,14 @@ public interface GenericDao <T extends AbstractEntity> {
      * @return entity with corresponding id or null when entity with id doesn't exist
      */
     T getById(Long id);
+    
+    /**
+     * Retrieves all entities at repository.
+     * 
+     * @throws IllegalStateException when data layer is not available due to internal error
+     * @return list of all entities
+     */
+    List<T> getAll();
 
     /**
      * Replaces entity in datalayer with corresponding ID by entity suplied in argument.

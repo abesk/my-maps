@@ -161,6 +161,45 @@ public class MyMapDaoImplTest {
 
     }
 
+    
+    @Test
+    public void testGetAll() {
+
+        assertTrue(instance.cache.isEmpty());
+
+        MyMapEntity entity1 = createNewEntity();
+        entity1.setName("test1");
+        MyMapEntity entity2 = createNewEntity();
+        entity2.setName("test2");
+        MyMapEntity entity3 = createNewEntity();
+        entity3.setName("test3");
+
+        MyMapEntity createdEntity1 = instance.create(entity1);
+        MyMapEntity createdEntity2 = instance.create(entity2);
+        MyMapEntity createdEntity3 = instance.create(entity3);
+
+
+        List<MyMapEntity> createdEntities = Arrays.asList(createdEntity3, createdEntity1, createdEntity2);
+
+        List<MyMapEntity> foundEntities = instance.getAll();
+        assertNotNull(foundEntities);
+        assertEquals(3, foundEntities.size());
+
+
+        for (MyMapEntity foundEntity : foundEntities) {
+            boolean found = false;
+            for (MyMapEntity mme : createdEntities) {
+                if (foundEntity.equals(mme) && EqualsBuilder.reflectionEquals(foundEntity, mme)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                fail("Created entity not found in result");
+            }
+        }
+    }
+    
     @Test
     public void testFindMapsByName() {
 

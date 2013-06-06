@@ -4,7 +4,9 @@ import cz.muni.fi.pv243.mymaps.entities.PointEntity;
 import cz.muni.fi.pv243.mymaps.entities.PointOfInterestEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -127,6 +129,45 @@ public class PointOfInterestDaoImplTest {
 
     }
 
+    
+    @Test
+    public void testGetAll() {
+
+        assertTrue(instance.cache.isEmpty());
+
+        PointOfInterestEntity entity1 = createNewEntity();
+        entity1.setDescription("test1");
+        PointOfInterestEntity entity2 = createNewEntity();
+        entity2.setDescription("test2");
+        PointOfInterestEntity entity3 = createNewEntity();
+        entity3.setDescription("test3");
+
+        PointOfInterestEntity createdEntity1 = instance.create(entity1);
+        PointOfInterestEntity createdEntity2 = instance.create(entity2);
+        PointOfInterestEntity createdEntity3 = instance.create(entity3);
+
+
+        List<PointOfInterestEntity> createdEntities = Arrays.asList(createdEntity3, createdEntity1, createdEntity2);
+
+        List<PointOfInterestEntity> foundEntities = instance.getAll();
+        assertNotNull(foundEntities);
+        assertEquals(3, foundEntities.size());
+
+
+        for (PointOfInterestEntity foundEntity : foundEntities) {
+            boolean found = false;
+            for (PointOfInterestEntity mme : createdEntities) {
+                if (foundEntity.equals(mme) && EqualsBuilder.reflectionEquals(foundEntity, mme)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                fail("Created entity not found in result");
+            }
+        }
+    }
+    
     @Test(expected = IllegalArgumentException.class)
     public void testCreateNull() {
         instance.create(null);

@@ -3,7 +3,9 @@ package cz.muni.fi.pv243.mymaps.dao.impl;
 import cz.muni.fi.pv243.mymaps.entities.AbstractEntity;
 import cz.muni.fi.pv243.mymaps.caches.CacheContainerProvider;
 import cz.muni.fi.pv243.mymaps.logging.Logged;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Model;
@@ -133,5 +135,16 @@ public abstract class GenericDaoImpl<T extends AbstractEntity> {
         }
 
         return cache.get(id);
+    }
+    
+    @Logged
+    public List<T> getAll() {
+        if (cache == null) {
+            String msg = "Internal error: cache is null.";
+            log.error(msg);
+            throw new IllegalStateException(msg);
+        }
+        
+        return new ArrayList<T>(cache.values());
     }
 }

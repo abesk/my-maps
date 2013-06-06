@@ -5,6 +5,7 @@ import cz.muni.fi.pv243.mymaps.entities.PointEntity;
 import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
@@ -126,6 +127,44 @@ public class ViewDaoImplTest {
 
         assertEquals(instance.cache.get(resultId), createdEntity);
         assertTrue(EqualsBuilder.reflectionEquals(instance.cache.get(resultId), createdEntity));
+    }
+
+    @Test
+    public void testGetAll() {
+
+        assertTrue(instance.cache.isEmpty());
+
+        ViewEntity entity1 = createNewEntity();
+        entity1.setName("test1");
+        ViewEntity entity2 = createNewEntity();
+        entity2.setName("test2");
+        ViewEntity entity3 = createNewEntity();
+        entity3.setName("test3");
+
+        ViewEntity createdEntity1 = instance.create(entity1);
+        ViewEntity createdEntity2 = instance.create(entity2);
+        ViewEntity createdEntity3 = instance.create(entity3);
+
+
+        List<ViewEntity> createdEntities = Arrays.asList(createdEntity3, createdEntity1, createdEntity2);
+
+        List<ViewEntity> foundEntities = instance.getAll();
+        assertNotNull(foundEntities);
+        assertEquals(3, foundEntities.size());
+
+
+        for (ViewEntity foundEntity : foundEntities) {
+            boolean found = false;
+            for (ViewEntity mme : createdEntities) {
+                if (foundEntity.equals(mme) && EqualsBuilder.reflectionEquals(foundEntity, mme)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                fail("Created entity not found in result");
+            }
+        }
     }
 
     @Test

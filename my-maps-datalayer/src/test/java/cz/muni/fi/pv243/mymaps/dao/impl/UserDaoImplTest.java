@@ -3,6 +3,7 @@ package cz.muni.fi.pv243.mymaps.dao.impl;
 import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
@@ -127,6 +128,45 @@ public class UserDaoImplTest {
 
     }
 
+    
+    @Test
+    public void testGetAll() {
+
+        assertTrue(instance.cache.isEmpty());
+
+        UserEntity entity1 = createNewEntity();
+        entity1.setLogin("test1");
+        UserEntity entity2 = createNewEntity();
+        entity2.setLogin("test2");
+        UserEntity entity3 = createNewEntity();
+        entity3.setLogin("test3");
+
+        UserEntity createdEntity1 = instance.create(entity1);
+        UserEntity createdEntity2 = instance.create(entity2);
+        UserEntity createdEntity3 = instance.create(entity3);
+
+
+        List<UserEntity> createdEntities = Arrays.asList(createdEntity3, createdEntity1, createdEntity2);
+
+        List<UserEntity> foundEntities = instance.getAll();
+        assertNotNull(foundEntities);
+        assertEquals(3, foundEntities.size());
+
+
+        for (UserEntity foundEntity : foundEntities) {
+            boolean found = false;
+            for (UserEntity mme : createdEntities) {
+                if (foundEntity.equals(mme) && EqualsBuilder.reflectionEquals(foundEntity, mme)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                fail("Created entity not found in result");
+            }
+        }
+    }
+    
     public void testGetUserByLogin() {
         assertTrue(instance.cache.isEmpty());
         UserEntity entity = createNewEntity();

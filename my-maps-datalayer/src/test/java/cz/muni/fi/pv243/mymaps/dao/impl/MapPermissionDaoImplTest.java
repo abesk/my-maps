@@ -174,6 +174,48 @@ public class MapPermissionDaoImplTest {
 
     }
 
+    
+    @Test
+    public void testGetAll() {
+
+        assertTrue(instance.cache.isEmpty());
+
+        MapPermissionEntity entity1 = createNewEntity();
+        entity1.setUser(user1);
+        entity1.setMap(map2);
+        MapPermissionEntity entity2 = createNewEntity();
+        entity2.setUser(user2);
+        entity2.setMap(map3);
+        MapPermissionEntity entity3 = createNewEntity();
+        entity1.setUser(user1);
+        entity3.setMap(map2);
+
+        MapPermissionEntity createdEntity1 = instance.create(entity1);
+        MapPermissionEntity createdEntity2 = instance.create(entity2);
+        MapPermissionEntity createdEntity3 = instance.create(entity3);
+
+
+        List<MapPermissionEntity> createdEntities = Arrays.asList(createdEntity3, createdEntity1, createdEntity2);
+
+        List<MapPermissionEntity> foundEntities = instance.getAll();
+        assertNotNull(foundEntities);
+        assertEquals(3, foundEntities.size());
+
+
+        for (MapPermissionEntity foundEntity : foundEntities) {
+            boolean found = false;
+            for (MapPermissionEntity mme : createdEntities) {
+                if (foundEntity.equals(mme) && EqualsBuilder.reflectionEquals(foundEntity, mme)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                fail("Created entity not found in result");
+            }
+        }
+    }
+    
     @Test
     public void testGetUsersPermissions() {
         assertTrue(instance.cache.isEmpty());
