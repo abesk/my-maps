@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pv243.mymaps.serviceImpl;
 
 import cz.muni.fi.pv243.mymaps.dao.MapPermissionDao;
@@ -19,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.jboss.logging.Logger;
 
@@ -26,6 +23,7 @@ import org.jboss.logging.Logger;
  *
  * @author Kuba
  */
+@Stateless
 public class UserServiceImpl implements UserService {
 
     @Inject
@@ -167,8 +165,7 @@ public class UserServiceImpl implements UserService {
     public List<User> geAllUsers() {
 
         List<User> userList = new ArrayList<>();
-        List<UserEntity> users = new ArrayList<>();
-        //users = userDao.getAllUsers();
+        List<UserEntity> users = userDao.getAll();
         for (UserEntity u : users) {
             userList.add(EntityDTOconvertor.convertUser(u));
         }

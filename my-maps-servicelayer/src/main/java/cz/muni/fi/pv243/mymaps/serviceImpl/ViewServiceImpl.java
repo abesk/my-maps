@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pv243.mymaps.serviceImpl;
 
 import cz.muni.fi.pv243.mymaps.dao.ViewDao;
@@ -14,6 +10,7 @@ import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.jboss.logging.Logger;
 
@@ -21,6 +18,7 @@ import org.jboss.logging.Logger;
  *
  * @author Kuba
  */
+@Stateless
 public class ViewServiceImpl implements ViewService {
 
     @Inject
