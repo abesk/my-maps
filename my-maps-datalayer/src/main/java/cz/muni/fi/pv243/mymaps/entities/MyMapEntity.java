@@ -72,7 +72,14 @@ public class MyMapEntity extends AbstractEntity implements Serializable {
     }
 
     public List<PointOfInterestEntity> getPointsOfInterest() {
-        return Collections.unmodifiableList(pointsOfInterest);
+        if(pointsOfInterest == null){
+            return new ArrayList<>();
+        }
+        
+        List<PointOfInterestEntity> returnList = new ArrayList<>();
+        returnList.addAll(pointsOfInterest);
+        
+        return returnList;
     }
 
     public void setPointsOfInterest(Collection<PointOfInterestEntity> pointsOfInterest) {

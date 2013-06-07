@@ -3,7 +3,7 @@ package cz.muni.fi.pv243.mymaps.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 
@@ -62,7 +62,14 @@ public class UserEntity extends AbstractEntity implements Serializable {
     }
 
     public Collection<ViewEntity> getViews() {
-        return views;
+        if(views == null){
+            return new ArrayList<>();
+        }
+        
+        List<ViewEntity> returnList = new ArrayList<>();
+        returnList.addAll(views);
+        
+        return returnList;
     }
 
     public void setViews(Collection<ViewEntity> views) {
