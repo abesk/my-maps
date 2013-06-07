@@ -17,6 +17,8 @@ import java.util.List;
 public interface ViewService {
 
     public void createView(View view);
+    
+     public void createView(View view, User user);
 
     public void updateView(View view);
 

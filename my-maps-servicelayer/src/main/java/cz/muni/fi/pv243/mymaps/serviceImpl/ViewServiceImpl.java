@@ -1,9 +1,11 @@
 package cz.muni.fi.pv243.mymaps.serviceImpl;
 
+import cz.muni.fi.pv243.mymaps.dao.UserDao;
 import cz.muni.fi.pv243.mymaps.dao.ViewDao;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.dto.View;
+import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.entities.ViewEntity;
 import cz.muni.fi.pv243.mymaps.service.ViewService;
 import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
@@ -23,6 +25,8 @@ public class ViewServiceImpl implements ViewService {
 
     @Inject
     private ViewDao viewDao;
+     @Inject
+    private UserDao userDao;
     @Inject
     protected Logger log;
     
@@ -37,6 +41,24 @@ public class ViewServiceImpl implements ViewService {
         ViewEntity newView = EntityDTOconvertor.convertView(view);
 
         viewDao.create(newView);
+    }
+    
+     @Override
+    public void createView(View view, User user) {
+        if (view == null) {
+            String msg = "View can not be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+        }
+
+        ViewEntity newView = EntityDTOconvertor.convertView(view);
+        UserEntity userEntity = EntityDTOconvertor.convertUser(user);
+        newView = viewDao.create(newView);
+        Collection<ViewEntity> views = userEntity.getViews();
+        views.add(newView);
+        userEntity.setViews(views);
+        userDao.update(userEntity);
+        
     }
 
     @Override
