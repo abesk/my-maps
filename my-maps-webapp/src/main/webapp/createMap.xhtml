@@ -29,6 +29,7 @@
         <script>require(["dojo/parser", "dijit/Dialog", "dijit/form/Button", "dijit/form/TextBox", "dijit/form/DateTextBox", "dijit/form/TimeTextBox"]);</script>
         <div id="left">
             <h:form id="mapForm">
+                <h:outputText value="map name" />
                 <h:inputText value="#{createMap.mapName}" id="mapName" />
                 <h:inputHidden value="#{createMap.points}" id="mapPoints" />
                 <h:panelGroup id="viewList" >
@@ -48,7 +49,7 @@
                         <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
                     </h:selectManyCheckbox>
                 </div>
-                <h:commandButton action="#{createMap.createMap}" />
+                <h:commandButton action="#{createMap.createMap}" value="create map" />
             </h:form>
         </div>
         <div id="map-canvas" style="width: 500px; height: 300px"></div>
@@ -127,9 +128,10 @@
                         <h:inputText  value="#{createMap.northEastLng}" label="NorthEast Lng" id="neLng" />
                         <h:inputText  value="#{createMap.southWestLat}" label="SouthWest Lat" id="swLat" />
                         <h:inputText  value="#{createMap.southWestLng}" label="SouthWest Lng" id="swLng" />
+                        <h:outputText value="view name" />
                         <h:inputText value="#{createMap.viewName}" id="viewName" /> 
                     </h:panelGrid>
-                    <h:commandButton value="asdf">
+                    <h:commandButton value="create view">
                         <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList" />
                     </h:commandButton>
 

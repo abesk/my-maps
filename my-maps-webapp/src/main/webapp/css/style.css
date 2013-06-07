@@ -10,3 +10,17 @@ root {
     display: block;
 }
 
+#left{
+    width : 200px;
+    float: left;
+}
+
+#map-canvas{
+    width : 500px;
+    flaot: left;
+}
+#views{
+    width : 200px;
+    float: left;
+}
+
