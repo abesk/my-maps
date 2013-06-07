@@ -13,8 +13,7 @@
     <packaging>war</packaging>    
     
     <properties>
-        <version.maven.surefire>2.11</version.maven.surefire>
-        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+        <version.maven.surefire>2.11</version.maven.surefire>        
     </properties>
     
     <build>
@@ -30,7 +29,7 @@
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
-            <!--plugin>
+            <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <version>7.4.Final</version>
@@ -53,7 +52,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin-->                       
+            </plugin>                       
         </plugins>
     </build>
 
