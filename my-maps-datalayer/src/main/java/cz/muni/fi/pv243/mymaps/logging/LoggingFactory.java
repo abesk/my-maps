@@ -15,7 +15,7 @@ import org.jboss.logging.Logger;
 public class LoggingFactory {
     
     @Produces
-    public Logger createLogger(InjectionPoint ip){         
+    public Logger createLogger(InjectionPoint ip){          
         return Logger.getLogger(ip.getMember().getDeclaringClass());
     }
     

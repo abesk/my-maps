@@ -6,20 +6,42 @@
 
     <!-- default shared configuration, accesible through CacheManager.getCache() -->
     <default>
-        <transaction transactionMode="TRANSACTIONAL" />            
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                    transactionMode="TRANSACTIONAL"
+                    lockingMode="OPTIMISTIC" />        
     </default>
     
-    <namedCache name="MapPermission">
-        <transaction transactionMode="TRANSACTIONAL" />        
+    <namedCache name="MapPermission"> 
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     transactionMode="TRANSACTIONAL"
+                     lockingMode="OPTIMISTIC" />  
+        
+        <loaders passivation="false" shared="false" preload="true">
+            <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="true"
+                    ignoreModifications="false" purgeOnStartup="false">
+            <properties>
+                <property name="location" value="mapPermissionStore"/>
+            </properties>
+            </loader>
+        </loaders>      
     </namedCache>
+    
     <namedCache name="PointOfInterest">
-        <transaction transactionMode="TRANSACTIONAL" />        
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     transactionMode="TRANSACTIONAL"
+                     lockingMode="OPTIMISTIC" />
     </namedCache>
-    <namedCache name="User">
-        <transaction transactionMode="TRANSACTIONAL" />        
+    
+    <namedCache name="User">  
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     transactionMode="TRANSACTIONAL"
+                     lockingMode="OPTIMISTIC" />              
     </namedCache>
+    
     <namedCache name="View">
-        <transaction transactionMode="TRANSACTIONAL" />        
+        <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                     transactionMode="TRANSACTIONAL"
+                     lockingMode="OPTIMISTIC" />
     </namedCache>
 
 </infinispan>
