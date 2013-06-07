@@ -31,7 +31,7 @@ public class ViewServiceImpl implements ViewService {
     protected Logger log;
     
     @Override
-    public void createView(View view) {
+    public View createView(View view) {
         if (view == null) {
             String msg = "View can not be null.";
             log.error(msg);
@@ -40,11 +40,13 @@ public class ViewServiceImpl implements ViewService {
 
         ViewEntity newView = EntityDTOconvertor.convertView(view);
 
-        viewDao.create(newView);
+        newView = viewDao.create(newView);
+        
+        return EntityDTOconvertor.convertView(newView);
     }
     
      @Override
-    public void createView(View view, User user) {
+    public View createView(View view, User user) {
         if (view == null) {
             String msg = "View can not be null.";
             log.error(msg);
@@ -59,10 +61,11 @@ public class ViewServiceImpl implements ViewService {
         userEntity.setViews(views);
         userDao.update(userEntity);
         
+        return EntityDTOconvertor.convertView(newView);       
     }
 
     @Override
-    public void updateView(View view) {
+    public View updateView(View view) {
         if (view == null) {
             String msg = "View can not be null.";
             log.error(msg);
@@ -71,7 +74,9 @@ public class ViewServiceImpl implements ViewService {
 
         ViewEntity newView = EntityDTOconvertor.convertView(view);
 
-        viewDao.update(newView);
+        newView = viewDao.update(newView);
+        
+        return EntityDTOconvertor.convertView(newView);
     }
 
     @Override
