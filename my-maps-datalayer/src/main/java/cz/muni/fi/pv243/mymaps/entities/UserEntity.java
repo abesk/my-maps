@@ -62,7 +62,7 @@ public class UserEntity extends AbstractEntity implements Serializable {
     }
 
     public Collection<ViewEntity> getViews() {
-        return Collections.unmodifiableCollection(views);
+        return views;
     }
 
     public void setViews(Collection<ViewEntity> views) {
