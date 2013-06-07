@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.jboss.logging.Logger;
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
     protected Logger log;
 
     @Override
-    public String createUser(User user) {
+    public User createUser(User user) {
         if (user == null) {
             String msg = "User can not be null.";
             log.error(msg);
@@ -51,22 +50,23 @@ public class UserServiceImpl implements UserService {
             String hashedPassword = Crypto.encode(password);
             user.setPassword(hashedPassword);
 
-            UserEntity newUser = EntityDTOconvertor.convertUser(user);
+            UserEntity newUserEntity = EntityDTOconvertor.convertUser(user);
 
-            userDao.create(newUser);
+            newUserEntity = userDao.create(newUserEntity);
+
+            User newUser = EntityDTOconvertor.convertUser(newUserEntity);
+            user.setPassword(password);
+            return newUser;
 
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             String msg = "Internal error: Create user - Failed to hash password.";
             log.error(msg);
             throw new IllegalStateException(msg);
         }
-
-        return password;
-
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         try {
             if (user == null) {
                 String msg = "User can not be null.";
@@ -79,8 +79,9 @@ public class UserServiceImpl implements UserService {
             }
 
             UserEntity newUser = EntityDTOconvertor.convertUser(user);
-
-            userDao.update(newUser);
+            newUser = userDao.update(newUser);
+            return EntityDTOconvertor.convertUser(newUser);
+            
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             String msg = "Internal error: Update user - Failed to hash password.";
             log.error(msg);

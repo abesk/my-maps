@@ -32,7 +32,7 @@ public class MapServiceImpl implements MapService {
     private Logger log;
 
     @Override
-    public void createMap(MyMap myMap) {
+    public MyMap createMap(MyMap myMap) {
         if (myMap == null) {
             String msg = "Map can not be null.";
             log.error(msg);
@@ -41,12 +41,13 @@ public class MapServiceImpl implements MapService {
 
         MyMapEntity newMyMap = EntityDTOconvertor.convertMyMap(myMap);
 
-        myMapDao.create(newMyMap);
+        newMyMap = myMapDao.create(newMyMap);
+        return EntityDTOconvertor.convertMyMap(newMyMap);
 
     }
 
     @Override
-    public void updateMap(MyMap myMap) {
+    public MyMap updateMap(MyMap myMap) {
         if (myMap == null) {
             String msg = "Map can not be null.";
             log.error(msg);
@@ -55,7 +56,8 @@ public class MapServiceImpl implements MapService {
 
         MyMapEntity newMyMap = EntityDTOconvertor.convertMyMap(myMap);
 
-        myMapDao.update(newMyMap);
+        newMyMap = myMapDao.update(newMyMap);
+        return EntityDTOconvertor.convertMyMap(newMyMap);
     }
 
     @Override
@@ -127,7 +129,7 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public void addPermision(User user, MyMap myMap, Permission permission) {
+    public MapPermission addPermision(User user, MyMap myMap, Permission permission) {
         if (user == null || myMap == null || permission == null) {
             String msg = "User, Map and Permission can not be null.";
             log.error(msg);
@@ -139,8 +141,9 @@ public class MapServiceImpl implements MapService {
         mapPermission.setMap(myMap);
         mapPermission.setPermission(permission);
 
-        mapPermissionDao.create(EntityDTOconvertor.convertMapPermission(mapPermission));
+        MapPermissionEntity newMapPermission = mapPermissionDao.create(EntityDTOconvertor.convertMapPermission(mapPermission));
 
+        return EntityDTOconvertor.convertMapPermission(newMapPermission);
     }
 
     @Override
