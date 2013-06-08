@@ -33,13 +33,17 @@
             <table><tr><td>
                         <div id="left">
                             <h:form id="mapForm">
+                                <h:messages style="color: red" />
                                 <h:outputText value="map name" />
-                                <h:inputText value="#{createMap.mapName}" id="mapName" />
+                                <h:inputText value="#{createMap.mapName}" id="mapName" >
+                                    <f:validateLength minimum="1" />
+                                </h:inputText>
                                 <h:inputHidden value="#{createMap.points}" id="mapPoints" />
                                 <h:outputLabel for="selectedView" value="VIew:" />
                                 <h:panelGrid id="viewList"  columns="2" >
                                     <h:selectOneRadio value="#{createMap.selectedView}" id="selectedView">
                                         <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="#{selectedView.id}"  itemLabel="#{selectedView.name}" />
+                                        <f:validateRequired />
                                     </h:selectOneRadio>
                                 </h:panelGrid>
 

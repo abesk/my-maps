@@ -59,7 +59,7 @@ public interface SecurityConfig {
         @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
             PhaseIdType.INVOKE_APPLICATION})
         EDIT_PROFILE,
-        @ViewPattern("/createView.xhtml")
+        @ViewPattern("/createMap.xhtml")
         @LoginView("/login.xhtml")
         @AccessDeniedView("/login.xhtml")
         @LoggedIn
