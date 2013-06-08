@@ -12,6 +12,7 @@ import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.service.MapService;
 import cz.muni.fi.pv243.mymaps.util.EntityDTOconvertor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -192,4 +193,77 @@ public class MapServiceImpl implements MapService {
 
         return permissionList;
     }
+
+    @Override
+    public List<MyMap> findMapsByName(String name) {
+         if (name == null || name.length() == 0) {
+            String msg = "Name cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+         }
+         
+         List<MyMapEntity> listEntites = myMapDao.findMapsByName(name);
+         List<MyMap> resultList = new ArrayList<>();
+         
+         for(MyMapEntity mapEntity: listEntites){
+             resultList.add(EntityDTOconvertor.convertMyMap(mapEntity));
+         }
+         
+         return resultList;
+    }
+
+    @Override
+    public List<MyMap> findMapsByCreationDate(Date exactDate) {
+         if (exactDate == null) {
+            String msg = "Date cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+         }
+         
+         List<MyMapEntity> listEntites = myMapDao.findMapsByCreationDate(exactDate);
+         List<MyMap> resultList = new ArrayList<>();
+         
+         for(MyMapEntity mapEntity: listEntites){
+             resultList.add(EntityDTOconvertor.convertMyMap(mapEntity));
+         }
+         
+         return resultList;
+    }
+
+    @Override
+    public List<MyMap> findMapsByCreationDate(Date from, Date to) {
+         if (from == null || to == null) {
+            String msg = "Date cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+         }
+         
+         List<MyMapEntity> listEntites = myMapDao.findMapsByCreationDate(from, to);
+         List<MyMap> resultList = new ArrayList<>();
+         
+         for(MyMapEntity mapEntity: listEntites){
+             resultList.add(EntityDTOconvertor.convertMyMap(mapEntity));
+         }
+         
+         return resultList;
+    }
+
+    @Override
+    public List<MyMap> findMapsByCreator(User creator) {
+         if (creator == null) {
+            String msg = "User cannot be null.";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+         }
+         
+         List<MyMapEntity> listEntites = myMapDao.findMapsByCreator(EntityDTOconvertor.convertUser(creator));
+         List<MyMap> resultList = new ArrayList<>();
+         
+         for(MyMapEntity mapEntity: listEntites){
+             resultList.add(EntityDTOconvertor.convertMyMap(mapEntity));
+         }
+         
+         return resultList;
+    }    
+    
 }
