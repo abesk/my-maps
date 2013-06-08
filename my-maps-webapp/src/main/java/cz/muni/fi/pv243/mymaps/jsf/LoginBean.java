@@ -58,7 +58,7 @@ public class LoginBean extends BaseAuthenticator {
                 String pass = pc.getValue();
                 if (user.getPassword().equals(Crypto.encode(pass))) {
                     setStatus(AuthenticationStatus.SUCCESS);
-                    org.picketlink.idm.api.User seamUser = new SimpleUser(user.getId().toString());
+                    org.picketlink.idm.api.User seamUser = new SimpleUser(user.getNick());
                     setUser(seamUser);
 
 
