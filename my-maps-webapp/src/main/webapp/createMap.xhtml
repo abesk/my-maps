@@ -30,11 +30,13 @@
         </ui:define>
         <ui:define name="mainarea">
             <script>require(["dojo/parser", "dijit/Dialog", "dijit/form/Button", "dijit/form/TextBox", "dijit/form/DateTextBox", "dijit/form/TimeTextBox"]);</script>
+            <table><tr><td>
             <div id="left">
                 <h:form id="mapForm">
                     <h:outputText value="map name" />
                     <h:inputText value="#{createMap.mapName}" id="mapName" />
                     <h:inputHidden value="#{createMap.points}" id="mapPoints" />
+                    <h:outputLabel for="selectedView" value="VIew:" />
                     <h:panelGroup id="viewList" >
                         <h:selectOneRadio value="#{createMap.selectedView}" id="selectedView">
                             <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="#{selectedView.id}"  itemLabel="#{selectedView.name}" />
@@ -54,9 +56,41 @@
                     </div>
                     <h:commandButton action="#{createMap.createMap}" value="create map" />
                 </h:form>
-            </div>
+            </div></td><td>
             <div id="map-canvas" style="width: 500px; height: 300px"></div>
+            </td>
+                    <td>
+            
+            <div id="views">
 
+
+                <div id="vieweForm">
+
+                    <h:form id="newView">
+
+                        <h:panelGrid columns="2">
+
+                            <h:inputText  value="#{createMap.newView.northEast.latitude}"  label="NorthEast Lat" id="neLat" />
+                            <h:message for="neLat" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.northEast.longitude}" label="NorthEast Lng" id="neLng" />
+                            <h:message for="neLng" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.southWest.latitude}" label="SouthWest Lat" id="swLat" />
+                            <h:message for="swLat" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.southWest.longitude}" label="SouthWest Lng" id="swLng" />
+                            <h:message for="swLng" style="color:red" />
+                            <h:outputText value="view name" />
+                            <h:inputText value="#{createMap.newView.name}" id="viewName" /> 
+                            <h:message for="viewName" style="color:red" />
+                        </h:panelGrid>
+                        <h:commandButton value="create view">
+                            <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList :newView" />
+                        </h:commandButton>
+
+                    </h:form>
+
+                </div>
+
+            </div></td></tr></table>
             <div data-dojo-type="dijit/Dialog" id="newMarker" data-dojo-id="newMarker" title="Form Dialog">
 
                 <div class="dijitDialogPaneContentArea">
@@ -116,36 +150,6 @@
                     <button data-dojo-type="dijit/form/Button" type="button" onClick="this.hide()">
                         Cancel
                     </button>
-                </div>
-
-            </div>
-            <div id="views">
-
-
-                <div id="vieweForm">
-
-                    <h:form id="newView">
-
-                        <h:panelGrid columns="2">
-
-                            <h:inputText  value="#{createMap.newView.northEast.latitude}"  label="NorthEast Lat" id="neLat" />
-                            <h:message for="neLat" style="color:red" />
-                            <h:inputText  value="#{createMap.newView.northEast.longitude}" label="NorthEast Lng" id="neLng" />
-                            <h:message for="neLng" style="color:red" />
-                            <h:inputText  value="#{createMap.newView.southWest.latitude}" label="SouthWest Lat" id="swLat" />
-                            <h:message for="swLat" style="color:red" />
-                            <h:inputText  value="#{createMap.newView.southWest.longitude}" label="SouthWest Lng" id="swLng" />
-                            <h:message for="swLng" style="color:red" />
-                            <h:outputText value="view name" />
-                            <h:inputText value="#{createMap.newView.name}" id="viewName" /> 
-                            <h:message for="viewName" style="color:red" />
-                        </h:panelGrid>
-                        <h:commandButton value="create view">
-                            <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList :newView" />
-                        </h:commandButton>
-
-                    </h:form>
-
                 </div>
 
             </div>
