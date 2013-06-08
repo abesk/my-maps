@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService {
     private MyMapDao myMapDao;
     @Inject
     protected Logger log;
-    public static final String ADMIN_LOGIN_NAME = "admin";
-    public static final String UNREGISTRED_LOGIN_NAME = "unregistred";
+    
 
     @PostConstruct
     public void initNativeUsers() {

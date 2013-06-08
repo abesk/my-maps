@@ -12,6 +12,8 @@ import java.util.List;
  * @author Kuba
  */
 public interface UserService {
+    public static final String ADMIN_LOGIN_NAME = "admin";
+    public static final String UNREGISTRED_LOGIN_NAME = "unregistred";
 
     /**
      * Creates new user
