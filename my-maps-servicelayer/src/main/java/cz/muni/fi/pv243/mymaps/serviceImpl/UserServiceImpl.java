@@ -4,8 +4,10 @@ import cz.muni.fi.pv243.mymaps.dao.MapPermissionDao;
 import cz.muni.fi.pv243.mymaps.dao.MyMapDao;
 import cz.muni.fi.pv243.mymaps.dao.UserDao;
 import cz.muni.fi.pv243.mymaps.dto.User;
+import cz.muni.fi.pv243.mymaps.dto.View;
 import cz.muni.fi.pv243.mymaps.entities.MapPermissionEntity;
 import cz.muni.fi.pv243.mymaps.entities.MyMapEntity;
+import cz.muni.fi.pv243.mymaps.entities.Role;
 import cz.muni.fi.pv243.mymaps.entities.UserEntity;
 import cz.muni.fi.pv243.mymaps.service.UserService;
 import cz.muni.fi.pv243.mymaps.util.Crypto;
@@ -15,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.jboss.logging.Logger;
@@ -36,6 +39,20 @@ public class UserServiceImpl implements UserService {
     private MyMapDao myMapDao;
     @Inject
     protected Logger log;
+    public static final String ADMIN_LOGIN_NAME = "admin";
+
+    @PostConstruct
+    public void initNativeUsers() {
+        if (getUserByLogin(ADMIN_LOGIN_NAME) == null) {
+            User admin = new User();
+            admin.setNick(ADMIN_LOGIN_NAME);
+            admin.setName("ADMINISTRATOR");
+            admin.setRole(Role.Admin.toString());
+            admin.setPassword("admin");
+            admin.setViews(new ArrayList<View>());
+            createUser(admin);
+        }
+    }
 
     @Override
     public User createUser(User user) {
@@ -44,7 +61,7 @@ public class UserServiceImpl implements UserService {
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
-        
+
         try {
 
             String hashedPassword = Crypto.encode(user.getPassword());
@@ -55,7 +72,7 @@ public class UserServiceImpl implements UserService {
             newUserEntity = userDao.create(newUserEntity);
 
             User newUser = EntityDTOconvertor.convertUser(newUserEntity);
-          
+
             return newUser;
 
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
@@ -81,7 +98,7 @@ public class UserServiceImpl implements UserService {
             UserEntity newUser = EntityDTOconvertor.convertUser(user);
             newUser = userDao.update(newUser);
             return EntityDTOconvertor.convertUser(newUser);
-            
+
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             String msg = "Internal error: Update user - Failed to hash password.";
             log.error(msg);
@@ -135,7 +152,9 @@ public class UserServiceImpl implements UserService {
         }
 
         UserEntity user = userDao.getUserByLogin(login);
-
+        if(user == null){
+            return null;
+        }
         return EntityDTOconvertor.convertUser(user);
     }
 
