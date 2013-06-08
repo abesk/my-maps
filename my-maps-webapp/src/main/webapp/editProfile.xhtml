@@ -22,13 +22,13 @@
                     <br/><br/>
 
                     <h:outputText value="New password " />
-                    <h:inputText value="#{userBean.password}" id="password" >
+                    <h:inputSecret value="#{userBean.password}" id="password" >
                         <f:validateLength minimum="8"/>
-                    </h:inputText>
+                    </h:inputSecret>
                     <h:outputText value="Confirm password " />
-                    <h:inputText value="#{userBean.password2}" id="password" >
+                    <h:inputSecret value="#{userBean.password2}" id="password2" >
                         <f:validateLength minimum="8"/>
-                    </h:inputText>
+                    </h:inputSecret>
                     <br/><br/>
 
 

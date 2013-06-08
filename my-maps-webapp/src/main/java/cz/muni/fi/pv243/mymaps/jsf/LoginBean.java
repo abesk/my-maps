@@ -49,8 +49,10 @@ public class LoginBean extends BaseAuthenticator {
 
     @Override
     public void authenticate() {
-        User user = userService.getUserByLogin(credentials.getUsername());
-        if (user == null) {
+        
+        User user;
+        
+        if ((user = userService.getUserByLogin(credentials.getUsername())) == null) {
             setStatus(AuthenticationStatus.FAILURE);
         } else {
             try {
@@ -82,5 +84,5 @@ public class LoginBean extends BaseAuthenticator {
         this.credentials = credentials;
     }
     
-    
+
 }

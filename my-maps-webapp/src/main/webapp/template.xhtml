@@ -20,7 +20,7 @@
 
         <div id="user-menu">
             <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" >
-                <h:form><h:commandLink value="#{identity.login}" action="#{userBean.showProfile}" />
+                <h:form><h:commandLink value="#{userBean.currentUserToString}" action="#{userBean.showProfile}" />
                 | <h:commandLink action="#{identity.logout}">Log out</h:commandLink></h:form>
             </h:panelGroup>		
             <h:panelGroup id="identity-unlogged" rendered="#{!identity.loggedIn}">

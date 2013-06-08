@@ -9,11 +9,11 @@ import cz.muni.fi.pv243.mymaps.dto.View;
 import cz.muni.fi.pv243.mymaps.entities.Role;
 import cz.muni.fi.pv243.mymaps.service.UserService;
 import cz.muni.fi.pv243.mymaps.service.ViewService;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -22,11 +22,10 @@ import javax.inject.Named;
  * @author Kuba
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 @Named(value = "userBean")
-public class UserBean implements Serializable {
+public class UserBean extends AbstractBean{
 
-    private static final long serialVersionUID = 1L;
 
     private User user;
 
@@ -213,5 +212,46 @@ public class UserBean implements Serializable {
         //perist change
         //go back to profile
         return "profile.xhtml";
+    }
+    
+    public String register() {
+
+        System.out.println(name);
+        System.out.println(nick);
+        System.out.println(role);
+        System.out.println(password);
+        System.out.println(password2);
+        
+        
+        if (password == null || !password.equals(password2)) {
+            return "registration.xhtml";
+        }
+
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setNick(nick);
+        newUser.setRole(role);
+        newUser.setPassword(password);
+
+        User u = userService.createUser(newUser);
+        return "login.xhtml";
+    }
+    
+    public String getCurrentUserToString() {
+        User u = getUser();
+
+        if (u == null) {
+            return "";
+        }
+        String label = "";
+        if (u.getNick() != null) {
+            label += u.getNick();
+        }
+
+        if (u.getNick() != null && u.getName() != null && !u.getName().isEmpty()) {
+            label += " ( " + u.getName() + " )";
+        }
+
+        return label;
     }
 }
