@@ -12,6 +12,7 @@ import cz.muni.fi.pv243.mymaps.service.ViewService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import org.jboss.seam.security.Identity;
 
 /**
  *
@@ -25,19 +26,14 @@ public class AbstractBean {
     protected ViewService viewService;
     @Inject
     protected UserService userService;
+    
+    @Inject
+    Identity identity;
     protected User getUser() {
-        List<User> allUsers = userService.geAllUsers();
-        if (allUsers == null || allUsers.isEmpty()) {
-            User user = new User();
-            user.setName("sdf");
-            user.setPassword("sdf");
-            user.setNick("sdf");
-            user.setViews(new ArrayList<View>());
-            userService.createUser(user);
-            allUsers = userService.geAllUsers();
-        }
+        String id = identity.getUser().getId();
+        return userService.getUserById(new Long(id));
 
-        return allUsers.get(0);
+        
 
     }
     
