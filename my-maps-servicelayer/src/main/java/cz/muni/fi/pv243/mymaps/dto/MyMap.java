@@ -50,7 +50,7 @@ public class MyMap {
 
     public List<PointOfInterest> getPointsOfInterest() {
         if(pointsOfInterest == null){
-            return null;
+            return new ArrayList<>();
         }
         
         return Collections.unmodifiableList(pointsOfInterest);

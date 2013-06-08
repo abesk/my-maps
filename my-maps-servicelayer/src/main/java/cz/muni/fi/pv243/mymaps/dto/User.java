@@ -27,6 +27,9 @@ public class User {
     private String role;
 
     public Collection<View> getViews() {
+        if(views == null){
+            return new ArrayList<>();
+        }
         return Collections.unmodifiableCollection(views);
     }
 
