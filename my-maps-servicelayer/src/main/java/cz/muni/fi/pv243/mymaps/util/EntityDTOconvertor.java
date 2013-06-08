@@ -30,7 +30,7 @@ public class EntityDTOconvertor {
         newMapPermission.setMap(EntityDTOconvertor.convertMyMap(mapPermission.getMap()));
         newMapPermission.setPermission(mapPermission.getPermission());
         newMapPermission.setUser(EntityDTOconvertor.convertUser(mapPermission.getUser()));
-
+        newMapPermission.setId(mapPermission.getId());
         return newMapPermission;
 
     }
@@ -44,7 +44,7 @@ public class EntityDTOconvertor {
         newMapPermission.setMap(EntityDTOconvertor.convertMyMap(mapPermission.getMap()));
         newMapPermission.setPermission(mapPermission.getPermission());
         newMapPermission.setUser(EntityDTOconvertor.convertUser(mapPermission.getUser()));
-
+        newMapPermission.setId(mapPermission.getId());
         return newMapPermission;
     }
 
