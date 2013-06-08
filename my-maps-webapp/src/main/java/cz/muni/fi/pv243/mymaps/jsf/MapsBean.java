@@ -8,8 +8,11 @@ import cz.muni.fi.pv243.mymaps.dto.MapPermission;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.entities.Permission;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -33,22 +36,63 @@ public class MapsBean extends AbstractBean{
     
     public List<MyMap> getMaps(){
         if(mapsList == null){
-            mapsList = mapService.getMapsByUser(getUser());
-        }
+            List<MapPermission> mapPermissionList = mapService.getMapPermissionsForUser(getUser());
+            
+            Set<MyMap> set = new HashSet<>();            
+            for(MapPermission permission: mapPermissionList){
+                set.add(permission.getMap());
+            }
+            
+            mapsList = new ArrayList<>();
+            mapsList.addAll(set);
+        }           
         
         return mapsList;
     } 
     
     public void getAllMaps(){
-        mapsList = mapService.getMapsByUser(getUser());
+        mapsList = null;
     }
     
     public void searchByName(){
-        mapsList = mapService.findMapsByName(searchName);
+        List<MapPermission> mapPermissionList = mapService.getMapPermissionsForUser(getUser());
+        
+        Set<MyMap> set = new HashSet<>();            
+        for(MapPermission permission: mapPermissionList){
+            set.add(permission.getMap());
+        }
+        
+        List<MyMap> list = new ArrayList<>();
+        list.addAll(set);
+        
+        List<MyMap> searchedMaps = mapService.findMapsByName(searchName);
+        
+        mapsList = new ArrayList<>();
+        for(MyMap map: searchedMaps){
+            if(list.contains(map)){
+                mapsList.add(map);
+            }
+        }        
     }
     
     public void searchByDate(){
-        mapsList = mapService.findMapsByCreationDate(searchDateFrom, searchDateTo);
+        List<MapPermission> mapPermissionList = mapService.getMapPermissionsForUser(getUser());
+        Set<MyMap> set = new HashSet<>();            
+        for(MapPermission permission: mapPermissionList){
+            set.add(permission.getMap());
+        }
+        
+        List<MyMap> list = new ArrayList<>();
+        list.addAll(set);
+        
+        List<MyMap> searchedMaps = mapService.findMapsByCreationDate(searchDateFrom, searchDateTo);
+        
+        mapsList = new ArrayList<>();
+        for(MyMap map: searchedMaps){
+            if(list.contains(map)){
+                mapsList.add(map);
+            }
+        } 
     }
     
     public String goToMap(Long id){
