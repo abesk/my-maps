@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+        <h1>Maps</h1>
+        <h:form>
+            <h:commandButton value="new Map" action="#{userMaps.newMap}"/>   
+        <h:dataTable value="#{userMaps.maps}" var="map">
+
+            <h:column>
+                <!-- column header -->
+                <f:facet name="header">Map Name</f:facet>
+                <!-- row record -->
+                <h:commandLink value="#{map.name}" action="#{userMaps.goToMap(map.id)}"/>
+                    
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Author</f:facet>
+                #{map.creator.name}
+            </h:column>
+
+            
+
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandLink value="#{map.name}" action="#{userMaps.deleteMap(map.id)}"/>
+                  
+            </h:column>
+
+        </h:dataTable>   
+            </h:form>
+    </h:body>
+</html>

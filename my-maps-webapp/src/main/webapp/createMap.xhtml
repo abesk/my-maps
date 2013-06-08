@@ -23,6 +23,10 @@
             var baseUrl = '<h:outputText value="#{request.contextPath}" />';
            
         </script>
+        <script>
+            var importedMap = <h:outputText value="#{createMap.jsonMap}" />;
+            
+        </script>
         <script type="text/javascript" src="script/createMap.js"></script>
     </h:head>
     <h:body class="tundra">
@@ -122,17 +126,23 @@
             <div id="vieweForm">
 
                 <h:form id="newView">
+                    
                     <h:panelGrid columns="2">
-
-                        <h:inputText  value="#{createMap.northEastLat}" label="NorthEast Lat" id="neLat" />
-                        <h:inputText  value="#{createMap.northEastLng}" label="NorthEast Lng" id="neLng" />
-                        <h:inputText  value="#{createMap.southWestLat}" label="SouthWest Lat" id="swLat" />
-                        <h:inputText  value="#{createMap.southWestLng}" label="SouthWest Lng" id="swLng" />
+                        
+                        <h:inputText  value="#{createMap.newView.northEast.latitude}"  label="NorthEast Lat" id="neLat" />
+                        <h:message for="neLat" style="color:red" />
+                        <h:inputText  value="#{createMap.newView.northEast.longitude}" label="NorthEast Lng" id="neLng" />
+                        <h:message for="neLng" style="color:red" />
+                        <h:inputText  value="#{createMap.newView.southWest.latitude}" label="SouthWest Lat" id="swLat" />
+                        <h:message for="swLat" style="color:red" />
+                        <h:inputText  value="#{createMap.newView.southWest.longitude}" label="SouthWest Lng" id="swLng" />
+                        <h:message for="swLng" style="color:red" />
                         <h:outputText value="view name" />
-                        <h:inputText value="#{createMap.viewName}" id="viewName" /> 
+                        <h:inputText value="#{createMap.newView.name}" id="viewName" /> 
+                        <h:message for="viewName" style="color:red" />
                     </h:panelGrid>
                     <h:commandButton value="create view">
-                        <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList" />
+                        <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList :newView" />
                     </h:commandButton>
 
                 </h:form>
