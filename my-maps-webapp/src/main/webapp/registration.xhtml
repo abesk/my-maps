@@ -9,32 +9,33 @@
         <ui:define name="mainarea">
 
 
-           <h:form id="userForm">
-                    <h:outputText value="Name " />
-                    <h:inputText value="#{userBean.name}" id="name" >
-                        <f:validateLength minimum="1"/>
-                    </h:inputText >
-                    <br/><br/>
+            <h:form id="userForm">
+                <h:outputText value="Name " />
+                <h:inputText value="#{userRegisterBean.name}" id="name" >
+                    <f:validateLength minimum="1"/>
+                </h:inputText >
+                <br/><br/>
 
-                    <h:outputText value="Login " />
-                    <h:inputText value="#{userBean.nick}" id="nick" />
-                    <br/><br/>
+                <h:outputText value="Login " />
+                <h:inputText value="#{userRegisterBean.nick}" id="nick" />
+                <br/><br/>
 
-                    <h:outputText value="Your password " />
-                    <h:inputSecret value="#{userBean.password}" id="password" >
-                        <f:validateLength minimum="8"/>
-                    </h:inputSecret>
-                    <h:outputText value="Confirm password " />
-                    <h:inputSecret value="#{userBean.password2}" id="password2" >
-                        <f:validateLength minimum="8"/>
-                    </h:inputSecret>
-                    <br/><br/>
+                <h:outputText value="Your password " />
+                <h:inputSecret value="#{userRegisterBean.password}" id="password" >
+                    <f:validateLength minimum="8"/>
+                </h:inputSecret>
+                <br/>
+                <h:outputText value="Confirm password " />
+                <h:inputSecret value="#{userRegisterBean.password2}" id="password2" >
+                    <f:validateLength minimum="8"/>
+                </h:inputSecret>
+                <br/><br/>
 
 
-                    <h:messages style="color:red">
-                    </h:messages>
-                    <h:commandButton action="#{userBean.register}" value="Register" />
-                </h:form>
+                <h:messages style="color:red">
+                </h:messages>
+                <h:commandButton action="#{userRegisterBean.register}" value="Register" />
+            </h:form>
 
 
         </ui:define>

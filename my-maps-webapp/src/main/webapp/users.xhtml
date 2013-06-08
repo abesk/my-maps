@@ -9,7 +9,10 @@
         <ui:define name="mainarea">
 
             <h:form>
-                <h:dataTable value="#{userBean.users}" var="user" styleClass="innerContent">
+                <h:commandLink value="Create new user" action="#{userCreateBean.createForward}" />
+                
+                
+                <h:dataTable value="#{userListBean.users}" var="user" styleClass="innerContent">
                     <h:column>
                         <f:facet name="header">User name</f:facet>
                         #{user.name}
@@ -24,11 +27,11 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Edit</f:facet>
-                        <h:commandLink value="Edit" action="#{userBean.editUserForward(user)}" />
+                        <h:commandLink value="Edit" action="#{userEditBean.editUserForward(user.id)}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header">Delete</f:facet>
-                        <h:commandLink value="Delete" action="#{userBean.deleteUser(user)}" />
+                        <h:commandLink value="Delete" action="#{userDeleteBean.deleteUser(user.id)}" />
                     </h:column>
                 </h:dataTable>
             </h:form>

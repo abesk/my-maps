@@ -20,7 +20,7 @@
 
         <div id="user-menu">
             <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" >
-                <h:form><h:commandLink value="#{userBean.currentUserToString}" action="#{userBean.showProfile}" />
+                <h:form><h:commandLink value="#{login.currentUserToString}" action="#{userProfileBean.showProfileForward}" />
                 | <h:commandLink action="#{identity.logout}">Log out</h:commandLink></h:form>
             </h:panelGroup>		
             <h:panelGroup id="identity-unlogged" rendered="#{!identity.loggedIn}">
@@ -33,9 +33,7 @@
         <div id="navigation">
             <ul class="nav">
                 <li><h:link outcome="index.xhtml">Home</h:link></li>
-                <!--                <li><h:link outcome="publicMaps.xhtml">Browse public maps</h:link></li>-->
                 <li><h:link outcome="maps.xhtml" rendered="#{true or identity.loggedIn}">Browse private maps</h:link></li>
-                <li><h:link outcome="views.xhtml" rendered="#{true or identity.loggedIn}">Manage map views</h:link></li>
                 <li><h:link outcome="users.xhtml" rendered="#{true or identity.loggedIn}">Manage users</h:link></li>
             </ul>
         </div>

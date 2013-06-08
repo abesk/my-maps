@@ -11,12 +11,12 @@ import javax.inject.Named;
 
 /**
  *
- * @author Kuba
+ * @author Jan Bliznak
  */
 @ManagedBean
 @RequestScoped
-@Named(value = "userBean")
-public class UserBean extends AbstractBean {
+@Named(value = "userRegisterBean")
+public class UserRegisterBean extends AbstractBean {
 
     private User user;
 
@@ -24,14 +24,11 @@ public class UserBean extends AbstractBean {
     private String nick;
     private String password;
     private String password2;
-    private String role;
+    private String role = Role.User.toString();
     private String newUserText;
-    private Role roles;
-    private List<View> views;
+    
 
-    private List<User> users;
-
-    public UserBean() {
+    public UserRegisterBean() {
     }
 
     public String getName() {
@@ -82,97 +79,18 @@ public class UserBean extends AbstractBean {
         this.newUserText = newUserText;
     }
 
-    public List<View> getViews() {
-        return views;
-    }
-
-    public void setViews(List<View> views) {
-        this.views = views;
-    }
 
     public Role[] getRoles() {
         return Role.values();
     }
 
-    public String createUser() {
-
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setNick(nick);
-        newUser.setRole(role);
-        newUser.setPassword(password);
-        views = new ArrayList<>();
-        newUser.setViews(views);
-        newUser = userService.createUser(newUser);
-
-        newUserText = "User: " + newUser.getNick() + " created. PASSWORD is: " + newUser.getPassword();
-
-        return "createUser.xhtml";
-    }
-
+   
     public List<User> getUsers() {
 
         return userService.geAllUsers();
     }
 
-    public String editUserForward(User user) {
-
-        if (user == null || user.getId() == null) {
-            return "404.xhtml";
-        }
-
-        return "editUser.xhtml?id=" + user.getId();
-    }
-
-    public String editUser() {
-
-        if (user == null || user.getId() == null) {
-            return "404.xhtml";
-        }
-
-        //get user
-        User userToUpdate = userService.getUserById(user.getId());
-
-        //change what I want
-        userToUpdate.setName(name);
-        userToUpdate.setNick(nick);
-        userToUpdate.setRole(role);
-
-        //persist
-        userService.updateUser(userToUpdate);
-
-        //go back to list
-        return "users.xhtml";
-    }
-
-    public String deleteUser(User user) {
-
-        if (user == null || user.getId() == null) {
-            return "404.xhtml";
-        }
-
-        userService.deleteUser(user);
-
-        return "users.xhtml";
-    }
-
-    public String showProfile() {
-        return "profile.xhtml";
-    }
-
-    public String editProfileForward() {
-        return "editProfile.xhtml";
-    }
-
-    public String editProfile() {
-        //TODO
-
-        //get current user data
-        //get updated data
-        //perist change
-        //go back to profile
-        return "profile.xhtml";
-    }
+    
 
     public String register() {
 

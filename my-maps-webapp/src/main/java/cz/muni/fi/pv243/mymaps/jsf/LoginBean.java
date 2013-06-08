@@ -44,7 +44,7 @@ public class LoginBean extends BaseAuthenticator {
         if (!identity.isLoggedIn()) {
             return "login.xhtml";
         }
-        return "maps.xhtml";
+        return "index.xhtml";
     }
 
     @Override
@@ -87,5 +87,30 @@ public class LoginBean extends BaseAuthenticator {
         this.credentials = credentials;
     }
     
+    public User getCurrentUser() {
+        if (identity.isLoggedIn()) {
+            String id = identity.getUser().getId();
+            return userService.getUserById(new Long(id));
+        }
+        return userService.getUserByLogin(UserService.UNREGISTRED_LOGIN_NAME);
+    }
+    
+    public String getCurrentUserToString() {
+        User u = getCurrentUser();
+
+        if (u == null) {
+            return "";
+        }
+        String label = "";
+        if (u.getNick() != null) {
+            label += u.getNick();
+        }
+
+        if (u.getNick() != null && u.getName() != null && !u.getName().isEmpty()) {
+            label += " ( " + u.getName() + " )";
+        }
+
+        return label;
+    }
 
 }

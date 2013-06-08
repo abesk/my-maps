@@ -10,25 +10,25 @@
             <div id="user">
                 <h:form id="userForm">
                     <h:outputText value="Name " />
-                    <h:inputText value="#{userBean.name}" id="name" >
+                    <h:inputText value="#{userEditBean.name}" id="name" >
                         <f:validateLength minimum="1"/>
                     </h:inputText >
                     <br/><br/>
 
                     <h:outputText value="Login " />
-                    <h:inputText value="#{userBean.nick}" id="nick" >
+                    <h:inputText value="#{userEditBean.nick}" id="nick" >
                         <f:validateLength minimum="1"/>
                     </h:inputText>
                     <br/><br/>
 
                     <h:outputText value="Role " />
-                    <h:selectOneMenu value="#{userBean.role}" >
-                        <f:selectItems value="#{userBean.roles}" />
+                    <h:selectOneMenu value="#{userEditBean.role}" >
+                        <f:selectItems value="#{userEditBean.roles}" />
                     </h:selectOneMenu>
                     <br/><br/>
 
                     <h:messages style="color:red" />
-                    <h:commandButton action="#{userBean.editUser}" value="Update user" />
+                    <h:commandButton action="#{userEditBean.editUser}" value="Update user" />
                 </h:form>
             </div>
 

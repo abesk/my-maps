@@ -7,28 +7,28 @@
     <ui:composition template="template.xhtml">
 
         <h1>Your profile</h1>
-        
+
         <ui:define name="mainarea">
-        <div id="user">
-            <h:form id="userForm">
-                
-                <h:outputText value="Name " />
-                <h:inputText value="#{userBean.name}" id="name" disabled="true" />
-                <br/><br/>
+            <div id="user">
+                <h:form id="userForm">
 
-                <h:outputText value="Login " />
-                <h:inputText value="#{userBean.nick}" id="nick" disabled="true" />
-                <br/><br/>
+                    <h:outputText value="Name " />
+                    <h:inputText value="#{userProfileBean.name}" id="name" disabled="true" />
+                    <br/><br/>
 
-                <h:outputText value="Role " />
-                <h:inputText value="#{userBean.role}"  id="role" disabled="true" />
-                <br/><br/>
+                    <h:outputText value="Login " />
+                    <h:inputText value="#{userProfileBean.nick}" id="nick" disabled="true" />
+                    <br/><br/>
 
-                <h:commandButton action="#{userBean.editProfileForward}" value="Edit your profile" />
-            </h:form>
-        </div>
+                    <h:outputText value="Role " />
+                    <h:inputText value="#{userProfileBean.role}"  id="role" disabled="true" />
+                    <br/><br/>
 
-    </ui:define>
+                    <h:commandButton action="#{userProfileBean.editProfileForward}" value="Edit your profile" />
+                </h:form>
+            </div>
+
+        </ui:define>
     </ui:composition>
 
 </html>

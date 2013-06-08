@@ -39,9 +39,6 @@ public class AbstractBean {
             return userService.getUserById(new Long(id));
         }
         return userService.getUserByLogin(UserService.UNREGISTRED_LOGIN_NAME);
-
-
-
     }
 
     protected boolean hasUserRights(User user, MyMap map, Permission permission) {
