@@ -55,6 +55,8 @@ public class CreateMapBean extends AbstractBean implements Serializable {
     private View newView;
     private MyMap map;
     
+    @Inject
+    private org.jboss.logging.Logger log;
    
 
     public CreateMapBean() {
@@ -73,7 +75,13 @@ public class CreateMapBean extends AbstractBean implements Serializable {
         if (obj != null && obj instanceof Long) {
             Long id = (Long) obj;
             map = mapService.getMapById(id);
-            
+            if(!hasUserRights(getUser(), map, Permission.WRITE)){
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().dispatch("maps.xhtml");
+                } catch (IOException ex) {
+                    log.error(ex);
+                }
+            }
             if(map != null){
                 mapName = map.getName();
                 selectedView = map.getView().getId();
