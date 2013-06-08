@@ -51,7 +51,10 @@ public class LoginBean extends BaseAuthenticator {
     public void authenticate() {
         
         User user;
-        
+        if(credentials.getUsername() == null){
+            setStatus(AuthenticationStatus.FAILURE);
+            return;
+        }
         if ((user = userService.getUserByLogin(credentials.getUsername())) == null) {
             setStatus(AuthenticationStatus.FAILURE);
         } else {

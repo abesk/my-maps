@@ -37,19 +37,19 @@
                     <h:inputHidden value="#{createMap.points}" id="mapPoints" />
                     <h:panelGroup id="viewList" >
                         <h:selectOneRadio value="#{createMap.selectedView}" id="selectedView">
-                            <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="${selectedView.id}" itemLabel="${selectedView.name}" />
+                            <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="#{selectedView.id}"  itemLabel="#{selectedView.name}" />
                         </h:selectOneRadio>
                     </h:panelGroup>
                     <div>
                         <h3>Update Permissions:</h3>
                         <h:selectManyCheckbox value="#{createMap.updatePermission}" >
-                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
+                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}"  itemDisabled="#{user.id == createMap.user.id}" itemLabel="#{user.name}" />            
                         </h:selectManyCheckbox>
                     </div>
                     <div>
                         <h3>View Permissions:</h3>
                         <h:selectManyCheckbox value="#{createMap.viewPermission}" >
-                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
+                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemDisabled="#{user.id == createMap.user.id}" itemLabel="#{user.name}" />            
                         </h:selectManyCheckbox>
                     </div>
                     <h:commandButton action="#{createMap.createMap}" value="create map" />

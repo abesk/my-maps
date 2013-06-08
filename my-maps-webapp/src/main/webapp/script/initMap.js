@@ -34,7 +34,7 @@ function initialize() {
         }
         
     }   
-    if(createMap){
+    if(createMap != null){
         createMap();
     }
 }

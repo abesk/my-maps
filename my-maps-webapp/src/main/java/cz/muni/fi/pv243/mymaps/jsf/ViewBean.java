@@ -12,6 +12,7 @@ import cz.muni.fi.pv243.mymaps.entities.Permission;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
@@ -71,11 +72,12 @@ public class ViewBean extends AbstractBean implements Serializable {
     public String getJsonMap() {
         String result = "null";
         try {
+            map.setCreationDate(new Date());
             ObjectMapper mapper = new ObjectMapper();
             result = mapper.writeValueAsString(map);
 
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(ViewBean.class.getName()).log(Level.SEVERE, null, ex);
+           log.error(ex);
         }
         return result;
 

@@ -33,7 +33,7 @@ public class AbstractBean {
     @Inject
     Identity identity;
 
-    protected User getUser() {
+    public User getUser() {
         if (identity.isLoggedIn()) {
             String id = identity.getUser().getId();
             return userService.getUserById(new Long(id));

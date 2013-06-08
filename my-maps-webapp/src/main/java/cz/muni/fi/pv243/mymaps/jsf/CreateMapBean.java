@@ -103,6 +103,13 @@ public class CreateMapBean extends AbstractBean implements Serializable {
                     }
                 }
             }
+            if(viewPermission.size() == 0){
+                viewPermission.add(getUser().getId().toString());
+            }
+            if(updatePermission.size() == 0){
+                updatePermission.add(getUser().getId().toString());
+            }
+            
         }
         
     }
@@ -113,7 +120,7 @@ public class CreateMapBean extends AbstractBean implements Serializable {
             result = mapper.writeValueAsString(map);
             
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(CreateMapBean.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex);
         }
         return result;
         
