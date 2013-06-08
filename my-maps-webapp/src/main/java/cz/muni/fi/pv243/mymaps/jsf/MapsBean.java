@@ -4,7 +4,10 @@
  */
 package cz.muni.fi.pv243.mymaps.jsf;
 
+import cz.muni.fi.pv243.mymaps.dto.MapPermission;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
+import cz.muni.fi.pv243.mymaps.dto.User;
+import cz.muni.fi.pv243.mymaps.entities.Permission;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -50,7 +53,14 @@ public class MapsBean extends AbstractBean{
     
     public String goToMap(Long id){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(MAP_KEY, id);
-        return "createMap.xhtml";
+        User user = getUser();
+        MyMap map = mapService.getMapById(id);
+        if(hasUserRights(user, map, Permission.WRITE)){
+            return "createMap.xhtml";
+        }
+        return "viewMap.xhtml";
+        
+        
     }
     
     public String deleteMap(Long id){

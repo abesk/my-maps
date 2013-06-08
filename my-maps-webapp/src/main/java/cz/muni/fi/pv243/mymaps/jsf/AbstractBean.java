@@ -4,8 +4,11 @@
  */
 package cz.muni.fi.pv243.mymaps.jsf;
 
+import cz.muni.fi.pv243.mymaps.dto.MapPermission;
+import cz.muni.fi.pv243.mymaps.dto.MyMap;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.dto.View;
+import cz.muni.fi.pv243.mymaps.entities.Permission;
 import cz.muni.fi.pv243.mymaps.service.MapService;
 import cz.muni.fi.pv243.mymaps.service.UserService;
 import cz.muni.fi.pv243.mymaps.service.ViewService;
@@ -35,6 +38,15 @@ public class AbstractBean {
 
         
 
+    }
+    protected boolean hasUserRights(User user, MyMap map, Permission permission){
+        List<MapPermission> mapPermissionsForUser = mapService.getMapPermissionsForUser(user);
+        for(MapPermission mapPermission : mapPermissionsForUser){
+            if(mapPermission.getMap().equals(map) && mapPermission.getPermission().equals(permission)){
+                return true;
+            }
+        }
+        return false;
     }
     
 }
