@@ -8,6 +8,7 @@ import cz.muni.fi.pv243.mymaps.dto.MapPermission;
 import cz.muni.fi.pv243.mymaps.dto.MyMap;
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.entities.Permission;
+import cz.muni.fi.pv243.mymaps.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -99,7 +100,7 @@ public class MapsBean extends AbstractBean{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(MAP_KEY, id);
         User user = getUser();
         MyMap map = mapService.getMapById(id);
-        if(hasUserRights(user, map, Permission.WRITE)){
+        if(hasUserRights(user, map, Permission.WRITE) && user.getNick() != UserService.UNREGISTRED_LOGIN_NAME){
             return "createMap.xhtml";
         }
         return "viewMap.xhtml";
