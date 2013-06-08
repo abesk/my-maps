@@ -86,7 +86,10 @@ public class MapServiceImpl implements MapService {
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
-
+        MyMapEntity map = myMapDao.getById(id);
+        if(map == null){
+            return null;
+        }
         return EntityDTOconvertor.convertMyMap(myMapDao.getById(id));
     }
 
@@ -147,17 +150,14 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public void removePermision(User user, MyMap myMap, Permission permission) {
-        if (permission == null) {
+    public void removePermision(MapPermission mapPermission) {
+        if (mapPermission == null) {
             String msg = "User, Map and Permission can not be null.";
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
 
-        MapPermission mapPermission = new MapPermission();
-        mapPermission.setUser(user);
-        mapPermission.setMap(myMap);
-        mapPermission.setPermission(permission);
+     
 
         mapPermissionDao.delete(EntityDTOconvertor.convertMapPermission(mapPermission));
 

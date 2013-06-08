@@ -83,12 +83,11 @@ public interface MapService {
     /**
      * Removes specified map permission
      * 
-     * @param user specified user
-     * @param myMap specified map
+   
      * @param permission specified level of permission to be removed
      * @throws IllegalArgumentException if user, myMap or permission are null
      */
-    public void removePermision(User user, MyMap myMap, Permission permission);
+    public void removePermision(MapPermission mapPermission);
 
     /**
      * Returns map permission with specified ID
