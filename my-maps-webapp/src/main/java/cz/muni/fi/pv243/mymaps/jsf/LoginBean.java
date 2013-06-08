@@ -9,6 +9,8 @@ import cz.muni.fi.pv243.mymaps.service.UserService;
 import cz.muni.fi.pv243.mymaps.util.Crypto;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,8 +26,8 @@ import org.picketlink.idm.impl.api.model.SimpleUser;
  * @author andrej
  */
 @ManagedBean
-@Named("loginBean")
 @RequestScoped
+@Named(value = "login")
 public class LoginBean extends BaseAuthenticator {
 
     @Inject
@@ -36,8 +38,12 @@ public class LoginBean extends BaseAuthenticator {
     UserService userService;
     @Inject
     private org.jboss.logging.Logger log;
-    
-    public String login(){
+
+    public String login() {
+        identity.login();
+        if (!identity.isLoggedIn()) {
+            return "login.xhtml";
+        }
         return "maps.xhtml";
     }
 
@@ -52,7 +58,7 @@ public class LoginBean extends BaseAuthenticator {
                 String pass = pc.getValue();
                 if (user.getPassword().equals(Crypto.encode(pass))) {
                     setStatus(AuthenticationStatus.SUCCESS);
-                    org.picketlink.idm.api.User seamUser = new SimpleUser(user.getNick());                    
+                    org.picketlink.idm.api.User seamUser = new SimpleUser(user.getNick());
                     setUser(seamUser);
 
 
