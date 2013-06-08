@@ -5,21 +5,22 @@
       xmlns:f="http://java.sun.com/jsf/core"
       >
 
-    
+
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>My Maps</title>
-        
-     
+
+
     </h:head>
 
     <h:body>
-        
+
         <ui:insert name="viewMetadata"/>
-        
+
         <div id="user-menu">
-            <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" ><h:outputText value="#{identity.name}" />
+            <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" >
+                <h:form><h:commandLink value="#{identity.name}" action="#{userBean.showProfile}" /></h:form>
                 | <h:commandLink action="#{identity.logout}">Log out</h:commandLink>
             </h:panelGroup>		
             <h:panelGroup id="identity-unlogged" rendered="#{!identity.loggedIn}"><h:outputText value="Unauthorized user" /> 
@@ -31,7 +32,7 @@
         <div id="navigation">
             <ul class="nav">
                 <li><h:link outcome="index.xhtml">Home</h:link></li>
-<!--                <li><h:link outcome="publicMaps.xhtml">Browse public maps</h:link></li>-->
+                <!--                <li><h:link outcome="publicMaps.xhtml">Browse public maps</h:link></li>-->
                 <li><h:link outcome="maps.xhtml" rendered="#{true or identity.loggedIn}">Browse private maps</h:link></li>
                 <li><h:link outcome="views.xhtml" rendered="#{true or identity.loggedIn}">Manage map views</h:link></li>
                 <li><h:link outcome="users.xhtml" rendered="#{true or identity.loggedIn}">Manage users</h:link></li>

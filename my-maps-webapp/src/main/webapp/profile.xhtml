@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="template.xhtml">
+
+        <h1>Your profile</h1>
+        
+        <ui:define name="mainarea">
+        <div id="user">
+            <h:form id="userForm">
+                
+                <h:outputText value="Name " />
+                <h:inputText value="#{userBean.name}" id="name" disabled="true" />
+                <br/><br/>
+
+                <h:outputText value="Login " />
+                <h:inputText value="#{userBean.nick}" id="nick" disabled="true" />
+                <br/><br/>
+
+                <h:outputText value="Role " />
+                <h:inputText value="#{userBean.role}"  id="role" disabled="true" />
+                <br/><br/>
+
+                <h:commandButton action="#{userBean.editProfileForward}" value="Edit your profile" />
+            </h:form>
+        </div>
+
+    </ui:define>
+    </ui:composition>
+
+</html>

@@ -9,7 +9,6 @@
         <ui:define name="mainarea">
             <div id="user">
                 <h:form id="userForm">
-
                     <h:outputText value="Name " />
                     <h:inputText value="#{userBean.name}" id="name" >
                         <f:validateLength minimum="1"/>
@@ -17,27 +16,26 @@
                     <br/><br/>
 
                     <h:outputText value="Login " />
-                    <h:inputText value="#{userBean.nick}" id="nick" >
-                        <f:validateLength minimum="1"/>
+                    <h:inputText value="#{userBean.nick}" id="nick" disabled="true" />
+                    <h:outputText value="Only admins have rights to change login. If you insist on change, please contact administrator." />
+
+                    <br/><br/>
+
+                    <h:outputText value="New password " />
+                    <h:inputText value="#{userBean.password}" id="password" >
+                        <f:validateLength minimum="8"/>
+                    </h:inputText>
+                    <h:outputText value="Confirm password " />
+                    <h:inputText value="#{userBean.password2}" id="password" >
+                        <f:validateLength minimum="8"/>
                     </h:inputText>
                     <br/><br/>
 
-                    <h:outputText value="Password will be generated automatically." />
-                    <br/><br/>
 
-                    <h:outputText value="Role " />
-                    <h:selectOneMenu value="#{userBean.role}" >
-                        <f:selectItems value="#{userBean.roles}" />
-                    </h:selectOneMenu>
-                    <br/><br/>
-
-                    <h:outputText value="#{userBean.newUserText}" />
                     <h:messages style="color:red">
                     </h:messages>
-                    <br/>
-                    <h:commandButton action="#{userBean.createUser}" value="Create user" />
+                    <h:commandButton action="#{userBean.editProfile}" value="Update your profile" />
                 </h:form>
-
             </div>
 
         </ui:define>

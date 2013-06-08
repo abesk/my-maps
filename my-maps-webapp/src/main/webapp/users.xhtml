@@ -8,14 +8,31 @@
 
         <ui:define name="mainarea">
 
-
-            welcome page <br /><br />
-            app info <br />
-
-
-
+            <h:form>
+                <h:dataTable value="#{userBean.users}" var="user" styleClass="innerContent">
+                    <h:column>
+                        <f:facet name="header">User name</f:facet>
+                        #{user.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Login</f:facet>
+                        #{user.nick} 
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Role</f:facet>
+                        #{user.role}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Edit</f:facet>
+                        <h:commandLink value="Edit" action="#{userBean.editUserForward(user)}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:commandLink value="Delete" action="#{userBean.deleteUser(user)}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </ui:define>
-
     </ui:composition>
 
 </html>
