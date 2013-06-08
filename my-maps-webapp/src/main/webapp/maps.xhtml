@@ -4,36 +4,39 @@
       xmlns:f="http://java.sun.com/jsf/core"      
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Browsing maps</title>
+        <link href="css/style.css" rel="stylesheet" />
     </h:head>
     <h:body>
-        <h1>Maps</h1>
+        <h1>Browsing maps</h1>
+        <ul id="menu">
+            <li><h:link value="Back to index" outcome="index" /></li>            
+        </ul>            
         <h:form>
-            <h:commandButton value="new Map" action="#{userMaps.newMap}"/>   
-        <h:dataTable value="#{userMaps.maps}" var="map">
-
-            <h:column>
-                <!-- column header -->
-                <f:facet name="header">Map Name</f:facet>
-                <!-- row record -->
-                <h:commandLink value="#{map.name}" action="#{userMaps.goToMap(map.id)}"/>
-                    
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">Author</f:facet>
-                #{map.creator.name}
-            </h:column>
-
-            
-
-            <h:column>
-                <f:facet name="header">Delete</f:facet>
-                <h:commandLink value="#{map.name}" action="#{userMaps.deleteMap(map.id)}"/>
-                  
-            </h:column>
-
-        </h:dataTable>   
-            </h:form>
+            <h:commandButton value="New map" action="#{userMaps.newMap}"/>   
+            <hr />
+            <h:dataTable value="#{userMaps.maps}" var="map" class="mapTable">
+                <h:column>
+                    <!-- column header -->
+                    <f:facet name="header">Map name</f:facet>
+                    <!-- row record -->
+                    <h:commandLink value="#{map.name}" action="#{userMaps.goToMap(map.id)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Author</f:facet>                    
+                    #{map.creator.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Creation date</f:facet>
+                    <h:outputText value="#{map.creationDate}" >
+                        <f:convertDateTime pattern="dd.MM.yyyy | HH:mm" />
+                    </h:outputText>                    
+                </h:column>    
+                <h:column>
+                    <f:facet name="header">Delete</f:facet>
+                    <h:commandLink value="Delete" action="#{userMaps.deleteMap(map.id)}"/>
+                </h:column>
+            </h:dataTable>   
+        </h:form>
     </h:body>
 </html>

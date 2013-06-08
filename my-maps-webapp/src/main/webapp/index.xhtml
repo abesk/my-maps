@@ -4,10 +4,17 @@
       xmlns:f="http://java.sun.com/jsf/core"      
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>My Maps Application</title>
+        <link href="css/style.css" rel="stylesheet" />
     </h:head>
     <h:body>
-        <h1>Welcome to index!</h1>
-        <h:outputText value="#{arbitaryNameUsedInHTML.beanName}" />        
+        <h1>Welcome to MyMaps!</h1>
+        <div>
+            <h2>Menu</h2>
+            <ul>
+                <li><h:link value="Login page" outcome="login" /></li>
+                <li><h:link value="Browse maps" outcome="maps" /></li>
+            </ul>
+        </div>        
     </h:body>
 </html>

@@ -24,3 +24,11 @@ root {
     float: left;
 }
 
+TABLE#mapTable TH {
+    padding: 5px 30px 5px 30px;        
+}
+
+TABLE#mapTable TD {
+    padding: 4px 15px 4px 15px;    
+}
+
