@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+
+    
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>My Maps</title>
+        
+     
+    </h:head>
+
+    <h:body>
+        
+        <ui:insert name="viewMetadata"/>
+        
+        <div id="user-menu">
+            <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" ><h:outputText value="#{identity.name}" />
+                | <h:commandLink action="#{identity.logout}">Log out</h:commandLink>
+            </h:panelGroup>		
+            <h:panelGroup id="identity-unlogged" rendered="#{!identity.loggedIn}"><h:outputText value="Unauthorized user" /> 
+                | <h:link outcome="login.xhtml">Log in</h:link>	
+                | <h:link outcome="registration.xhtml">Registration</h:link>
+            </h:panelGroup>
+        </div>
+
+        <div id="navigation">
+            <ul class="nav">
+                <li><h:link outcome="index.xhtml">Home</h:link></li>
+<!--                <li><h:link outcome="publicMaps.xhtml">Browse public maps</h:link></li>-->
+                <li><h:link outcome="maps.xhtml" rendered="#{true or identity.loggedIn}">Browse private maps</h:link></li>
+                <li><h:link outcome="views.xhtml" rendered="#{true or identity.loggedIn}">Manage map views</h:link></li>
+                <li><h:link outcome="users.xhtml" rendered="#{true or identity.loggedIn}">Manage users</h:link></li>
+            </ul>
+        </div>
+
+
+        <div id="main">
+
+            <div id="content">
+                <ui:insert name="mainarea">
+                    Main Area
+                </ui:insert>
+            </div>
+
+        </div>
+        <h:form>
+        </h:form>
+    </h:body>
+</html>

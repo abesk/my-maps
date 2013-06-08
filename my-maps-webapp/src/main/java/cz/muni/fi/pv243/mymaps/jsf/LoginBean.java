@@ -9,9 +9,10 @@ import cz.muni.fi.pv243.mymaps.service.UserService;
 import cz.muni.fi.pv243.mymaps.util.Crypto;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import org.jboss.seam.security.BaseAuthenticator;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
@@ -22,6 +23,9 @@ import org.picketlink.idm.impl.api.model.SimpleUser;
  *
  * @author andrej
  */
+@ManagedBean
+@Named("loginBean")
+@RequestScoped
 public class LoginBean extends BaseAuthenticator {
 
     @Inject

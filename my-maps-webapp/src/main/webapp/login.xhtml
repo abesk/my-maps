@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="mainarea">
+
+            <h1>Login</h1>
+
+
+            <h:form id="loginForm">
+
+                <h:outputLabel for="login" styleClass="control-label"
+                               value="Login:" />
+                <h:inputText id="username" value="#{credentials.username}" />
+                <h:message for="username" errorClass="invalid" />
+
+                <h:outputLabel for="password" styleClass="control-label"
+                               value="Password:" />
+                <h:inputSecret id="password" value="#{credentials.password}" />
+                <h:message for="password" errorClass="invalid" />
+
+                <h:panelGrid columns="2">
+                    <h:commandButton id="login" action="#{loginBean.login()}"
+                                     value="Login" />
+                    <h:messages styleClass="messages" errorClass="invalid"
+                                infoClass="valid" warnClass="warning" globalOnly="true" />
+                </h:panelGrid>
+            </h:form>
+
+            <div>
+                <h:link outcome="/registration.xhtml">
+                    Or register a new account!
+                </h:link> 
+            </div>
+        </ui:define> 
+    </ui:composition>
+</html>
