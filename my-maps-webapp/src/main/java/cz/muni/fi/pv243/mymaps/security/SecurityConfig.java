@@ -23,20 +23,48 @@ public interface SecurityConfig {
 
         @ViewPattern("/index.xhtml")
         INDEX,
-        @ViewPattern("/admin_page.xhtml")
+        @ViewPattern("/maps.xhtml")
+        MAPS,
+        @ViewPattern("/viewMap.xhtml")
+        VIEW,
+        @ViewPattern("/createView.xhtml")
+        CREATEVIEW,
+        @ViewPattern("/users.xhtml")
         @LoginView("/login.xhtml")
         @AccessDeniedView("/login.xhtml")
         @LoggedIn
         @Admin
         @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
             PhaseIdType.INVOKE_APPLICATION})
-        ADMIN_PAGE,
-        @ViewPattern("/maps.xhtml")
+        USERS,
+        @ViewPattern("/editUser.xhtml")
+        @LoginView("/login.xhtml")
+        @AccessDeniedView("/login.xhtml")
+        @LoggedIn
+        @Admin
+        @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
+            PhaseIdType.INVOKE_APPLICATION})
+        EDIT_USER,
+        @ViewPattern("/profile.xhtml")
         @LoginView("/login.xhtml")
         @AccessDeniedView("/login.xhtml")
         @LoggedIn
         @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
             PhaseIdType.INVOKE_APPLICATION})
-        USER_PROFILE}
-        
+        USER_PROFILE,
+        @ViewPattern("/editProfile.xhtml")
+        @LoginView("/login.xhtml")
+        @AccessDeniedView("/login.xhtml")
+        @LoggedIn
+        @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
+            PhaseIdType.INVOKE_APPLICATION})
+        EDIT_PROFILE,
+        @ViewPattern("/createView.xhtml")
+        @LoginView("/login.xhtml")
+        @AccessDeniedView("/login.xhtml")
+        @LoggedIn
+        @RestrictAtPhase({PhaseIdType.RESTORE_VIEW,
+            PhaseIdType.INVOKE_APPLICATION})
+        CREATE_MAP
+    }
 }
