@@ -19,7 +19,7 @@
         <ui:insert name="viewMetadata"/>
         
         <div id="user-menu">
-            <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" ><h:outputText value="#{identity.name}" />
+            <h:panelGroup id="identity-logged"  rendered="#{identity.loggedIn}" ><h:outputText value="#{identity.login}" />
                 | <h:commandLink action="#{identity.logout}">Log out</h:commandLink>
             </h:panelGroup>		
             <h:panelGroup id="identity-unlogged" rendered="#{!identity.loggedIn}"><h:outputText value="Unauthorized user" /> 
