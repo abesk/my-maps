@@ -43,7 +43,10 @@ public class MapServiceImpl implements MapService {
         MyMapEntity newMyMap = EntityDTOconvertor.convertMyMap(myMap);
 
         newMyMap = myMapDao.create(newMyMap);
-        return EntityDTOconvertor.convertMyMap(newMyMap);
+        addPermision(myMap.getCreator(), EntityDTOconvertor.convertMyMap(newMyMap), Permission.READ);
+        addPermision(myMap.getCreator(), EntityDTOconvertor.convertMyMap(newMyMap), Permission.WRITE);
+        
+        return getMapById(newMyMap.getId());
 
     }
 
