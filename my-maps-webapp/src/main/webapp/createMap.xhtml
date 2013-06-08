@@ -5,151 +5,150 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>TODO  supply a title</title>
-        <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-        <link href="css/style.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/tundra/tundra.css" />
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/resources/dojo.css" />
-        <script src="https://maps.googleapis.com/maps/api/js?sensor=true">            
-        </script>
+    <ui:composition template="template.xhtml">
+        <ui:define name="scripts" >
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/tundra/tundra.css" />
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/resources/dojo.css" />
+            <script src="https://maps.googleapis.com/maps/api/js?sensor=true">            
+            </script>
 
 
 
-        <script>dojoConfig = {parseOnLoad: true}</script>
-        <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
-       
-        <script type="text/javascript">            
-            var baseUrl = '<h:outputText value="#{request.contextPath}" />';
+            <script>dojoConfig = {parseOnLoad: true}</script>
+            <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+
+            <script type="text/javascript">            
+                var baseUrl = '<h:outputText value="#{request.contextPath}" />';
            
-        </script>
-        <script>
-            var importedMap = <h:outputText value="#{createMap.jsonMap}" />;
+            </script>
+            <script>
+                var importedMap = <h:outputText value="#{createMap.jsonMap}" />;
             
-        </script>
-        <script type="text/javascript" src="script/createMap.js"></script>
-    </h:head>
-    <h:body class="tundra">
-        <script>require(["dojo/parser", "dijit/Dialog", "dijit/form/Button", "dijit/form/TextBox", "dijit/form/DateTextBox", "dijit/form/TimeTextBox"]);</script>
-        <div id="left">
-            <h:form id="mapForm">
-                <h:outputText value="map name" />
-                <h:inputText value="#{createMap.mapName}" id="mapName" />
-                <h:inputHidden value="#{createMap.points}" id="mapPoints" />
-                <h:panelGroup id="viewList" >
-                    <h:selectOneRadio value="#{createMap.selectedView}" id="selectedView">
-                        <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="${selectedView.id}" itemLabel="${selectedView.name}" />
-                    </h:selectOneRadio>
-                </h:panelGroup>
-                <div>
-                    <h3>Update Permissions:</h3>
-                    <h:selectManyCheckbox value="#{createMap.updatePermission}" >
-                        <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
-                    </h:selectManyCheckbox>
-                </div>
-                <div>
-                    <h3>View Permissions:</h3>
-                    <h:selectManyCheckbox value="#{createMap.viewPermission}" >
-                        <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
-                    </h:selectManyCheckbox>
-                </div>
-                <h:commandButton action="#{createMap.createMap}" value="create map" />
-            </h:form>
-        </div>
-        <div id="map-canvas" style="width: 500px; height: 300px"></div>
-
-        <div data-dojo-type="dijit/Dialog" id="newMarker" data-dojo-id="newMarker" title="Form Dialog">
-
-            <div class="dijitDialogPaneContentArea">
-                <table>
-                    <tr>
-                        <td><label for="name">Name:</label></td>
-                        <td><input data-dojo-type="dijit/form/TextBox" type="text" id="markerName" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Icon:
-                        </td>
-                        <td>
-                            <div id="iconSelect" data-dojo-type="dijit/form/Select">
-                                <div value="airport"><img src="#{request.contextPath}/icons/airport.png" /> </div>
-                                <div value="alien"><img src="#{request.contextPath}/icons/alien.png" /></div>
-                                <div value="bank">	<img src="#{request.contextPath}/icons/bank.png" /></div>
-                                <div value="bar">	<img src="#{request.contextPath}/icons/bar.png" /></div>
-                                <div value="beach">	<img src="#{request.contextPath}/icons/beach.png" /></div>
-                                <div value="beachvolleyball">	<img src="#{request.contextPath}/icons/beachvolleyball.png" /></div>
-                                <div value="beautifulview">	<img src="#{request.contextPath}/icons/beautifulview.png" /></div>
-                                <div value="bus">	<img src="#{request.contextPath}/icons/bus.png" /></div>
-                                <div value="castle-2">	<img src="#{request.contextPath}/icons/castle-2.png" /></div>
-                                <div value="cinema">	<img src="#{request.contextPath}/icons/cinema.png" /></div>
-                                <div value="coffee">	<img src="#{request.contextPath}/icons/coffee.png" /></div>
-                                <div value="computers">	<img src="#{request.contextPath}/icons/computers.png" /></div>
-                                <div value="deer">	<img src="#{request.contextPath}/icons/deer.png" /></div>
-                                <div value="drinkingwater">	<img src="#{request.contextPath}/icons/drinkingwater.png" /></div>
-                                <div value="finish">	<img src="#{request.contextPath}/icons/finish.png" /></div>
-                                <div value="fire">	<img src="#{request.contextPath}/icons/fire.png" /></div>
-                                <div value="group-2">	<img src="#{request.contextPath}/icons/group-2.png" /></div>
-                                <div value="museum_science">	<img src="#{request.contextPath}/icons/museum_science.png" /></div>
-                                <div value="office-building">	<img src="#{request.contextPath}/icons/office-building.png" /></div>
-                                <div value="oil-2">	<img src="#{request.contextPath}/icons/oil-2.png" /></div>
-                                <div value="police">	<img src="#{request.contextPath}/icons/police.png" /></div>
-                                <div value="smiley_happy">	<img src="#{request.contextPath}/icons/smiley_happy.png" /></div>
-                                <div value="smoking">	<img src="#{request.contextPath}/icons/smoking.png" /></div>
-                                <div value="supermarket">	<img src="#{request.contextPath}/icons/supermarket.png" /></div>
-                                <div value="telephone">	<img src="#{request.contextPath}/icons/telephone.png" /></div>
-                                <div value="trafficlight">	<img src="#{request.contextPath}/icons/trafficlight.png" /></div>
-                                <div value="train">	<img src="#{request.contextPath}/icons/train.png" /></div>
-                                <div value="wifi">	<img src="#{request.contextPath}/icons/wifi.png" /></div>
-                                <div value="winebar">	<img src="#{request.contextPath}/icons/winebar.png" /></div>
-                                <div value="workoffice">	<img src="#{request.contextPath}/icons/workoffice.png" /></div>
-                                <div value="workshop">	<img src="#{request.contextPath}/icons/workshop.png" /></div>
-                                <div value="world">	<img src="#{request.contextPath}/icons/world.png" /></div>
-                                <div value="zoo">	<img src="#{request.contextPath}/icons/zoo.png" /></div>
-                            </div>
-                        </td>
-                    </tr>             
-                </table>
-            </div>
-            <div class="dijitDialogPaneActionBar">
-                <button data-dojo-type="dijit/form/Button" type="submit">
-                    OK
-                </button>
-                <button data-dojo-type="dijit/form/Button" type="button" onClick="this.hide()">
-                    Cancel
-                </button>
-            </div>
-
-        </div>
-        <div id="views">
-
-
-            <div id="vieweForm">
-
-                <h:form id="newView">
-                    
-                    <h:panelGrid columns="2">
-                        
-                        <h:inputText  value="#{createMap.newView.northEast.latitude}"  label="NorthEast Lat" id="neLat" />
-                        <h:message for="neLat" style="color:red" />
-                        <h:inputText  value="#{createMap.newView.northEast.longitude}" label="NorthEast Lng" id="neLng" />
-                        <h:message for="neLng" style="color:red" />
-                        <h:inputText  value="#{createMap.newView.southWest.latitude}" label="SouthWest Lat" id="swLat" />
-                        <h:message for="swLat" style="color:red" />
-                        <h:inputText  value="#{createMap.newView.southWest.longitude}" label="SouthWest Lng" id="swLng" />
-                        <h:message for="swLng" style="color:red" />
-                        <h:outputText value="view name" />
-                        <h:inputText value="#{createMap.newView.name}" id="viewName" /> 
-                        <h:message for="viewName" style="color:red" />
-                    </h:panelGrid>
-                    <h:commandButton value="create view">
-                        <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList :newView" />
-                    </h:commandButton>
-
+            </script>
+            <script type="text/javascript" src="script/createMap.js"></script>    
+        </ui:define>
+        <ui:define name="mainarea">
+            <script>require(["dojo/parser", "dijit/Dialog", "dijit/form/Button", "dijit/form/TextBox", "dijit/form/DateTextBox", "dijit/form/TimeTextBox"]);</script>
+            <div id="left">
+                <h:form id="mapForm">
+                    <h:outputText value="map name" />
+                    <h:inputText value="#{createMap.mapName}" id="mapName" />
+                    <h:inputHidden value="#{createMap.points}" id="mapPoints" />
+                    <h:panelGroup id="viewList" >
+                        <h:selectOneRadio value="#{createMap.selectedView}" id="selectedView">
+                            <f:selectItems value="#{createMap.views}" var="selectedView" itemValue="${selectedView.id}" itemLabel="${selectedView.name}" />
+                        </h:selectOneRadio>
+                    </h:panelGroup>
+                    <div>
+                        <h3>Update Permissions:</h3>
+                        <h:selectManyCheckbox value="#{createMap.updatePermission}" >
+                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
+                        </h:selectManyCheckbox>
+                    </div>
+                    <div>
+                        <h3>View Permissions:</h3>
+                        <h:selectManyCheckbox value="#{createMap.viewPermission}" >
+                            <f:selectItems value="#{createMap.users}" var="user" itemValue="#{user.id}" itemLabel="#{user.name}" />            
+                        </h:selectManyCheckbox>
+                    </div>
+                    <h:commandButton action="#{createMap.createMap}" value="create map" />
                 </h:form>
+            </div>
+            <div id="map-canvas" style="width: 500px; height: 300px"></div>
+
+            <div data-dojo-type="dijit/Dialog" id="newMarker" data-dojo-id="newMarker" title="Form Dialog">
+
+                <div class="dijitDialogPaneContentArea">
+                    <table>
+                        <tr>
+                            <td><label for="name">Name:</label></td>
+                            <td><input data-dojo-type="dijit/form/TextBox" type="text" id="markerName" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Icon:
+                            </td>
+                            <td>
+                                <div id="iconSelect" data-dojo-type="dijit/form/Select">
+                                    <div value="airport"><img src="#{request.contextPath}/icons/airport.png" /> </div>
+                                    <div value="alien"><img src="#{request.contextPath}/icons/alien.png" /></div>
+                                    <div value="bank">	<img src="#{request.contextPath}/icons/bank.png" /></div>
+                                    <div value="bar">	<img src="#{request.contextPath}/icons/bar.png" /></div>
+                                    <div value="beach">	<img src="#{request.contextPath}/icons/beach.png" /></div>
+                                    <div value="beachvolleyball">	<img src="#{request.contextPath}/icons/beachvolleyball.png" /></div>
+                                    <div value="beautifulview">	<img src="#{request.contextPath}/icons/beautifulview.png" /></div>
+                                    <div value="bus">	<img src="#{request.contextPath}/icons/bus.png" /></div>
+                                    <div value="castle-2">	<img src="#{request.contextPath}/icons/castle-2.png" /></div>
+                                    <div value="cinema">	<img src="#{request.contextPath}/icons/cinema.png" /></div>
+                                    <div value="coffee">	<img src="#{request.contextPath}/icons/coffee.png" /></div>
+                                    <div value="computers">	<img src="#{request.contextPath}/icons/computers.png" /></div>
+                                    <div value="deer">	<img src="#{request.contextPath}/icons/deer.png" /></div>
+                                    <div value="drinkingwater">	<img src="#{request.contextPath}/icons/drinkingwater.png" /></div>
+                                    <div value="finish">	<img src="#{request.contextPath}/icons/finish.png" /></div>
+                                    <div value="fire">	<img src="#{request.contextPath}/icons/fire.png" /></div>
+                                    <div value="group-2">	<img src="#{request.contextPath}/icons/group-2.png" /></div>
+                                    <div value="museum_science">	<img src="#{request.contextPath}/icons/museum_science.png" /></div>
+                                    <div value="office-building">	<img src="#{request.contextPath}/icons/office-building.png" /></div>
+                                    <div value="oil-2">	<img src="#{request.contextPath}/icons/oil-2.png" /></div>
+                                    <div value="police">	<img src="#{request.contextPath}/icons/police.png" /></div>
+                                    <div value="smiley_happy">	<img src="#{request.contextPath}/icons/smiley_happy.png" /></div>
+                                    <div value="smoking">	<img src="#{request.contextPath}/icons/smoking.png" /></div>
+                                    <div value="supermarket">	<img src="#{request.contextPath}/icons/supermarket.png" /></div>
+                                    <div value="telephone">	<img src="#{request.contextPath}/icons/telephone.png" /></div>
+                                    <div value="trafficlight">	<img src="#{request.contextPath}/icons/trafficlight.png" /></div>
+                                    <div value="train">	<img src="#{request.contextPath}/icons/train.png" /></div>
+                                    <div value="wifi">	<img src="#{request.contextPath}/icons/wifi.png" /></div>
+                                    <div value="winebar">	<img src="#{request.contextPath}/icons/winebar.png" /></div>
+                                    <div value="workoffice">	<img src="#{request.contextPath}/icons/workoffice.png" /></div>
+                                    <div value="workshop">	<img src="#{request.contextPath}/icons/workshop.png" /></div>
+                                    <div value="world">	<img src="#{request.contextPath}/icons/world.png" /></div>
+                                    <div value="zoo">	<img src="#{request.contextPath}/icons/zoo.png" /></div>
+                                </div>
+                            </td>
+                        </tr>             
+                    </table>
+                </div>
+                <div class="dijitDialogPaneActionBar">
+                    <button data-dojo-type="dijit/form/Button" type="submit">
+                        OK
+                    </button>
+                    <button data-dojo-type="dijit/form/Button" type="button" onClick="this.hide()">
+                        Cancel
+                    </button>
+                </div>
 
             </div>
+            <div id="views">
 
-        </div>
 
-    </h:body>
+                <div id="vieweForm">
+
+                    <h:form id="newView">
+
+                        <h:panelGrid columns="2">
+
+                            <h:inputText  value="#{createMap.newView.northEast.latitude}"  label="NorthEast Lat" id="neLat" />
+                            <h:message for="neLat" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.northEast.longitude}" label="NorthEast Lng" id="neLng" />
+                            <h:message for="neLng" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.southWest.latitude}" label="SouthWest Lat" id="swLat" />
+                            <h:message for="swLat" style="color:red" />
+                            <h:inputText  value="#{createMap.newView.southWest.longitude}" label="SouthWest Lng" id="swLng" />
+                            <h:message for="swLng" style="color:red" />
+                            <h:outputText value="view name" />
+                            <h:inputText value="#{createMap.newView.name}" id="viewName" /> 
+                            <h:message for="viewName" style="color:red" />
+                        </h:panelGrid>
+                        <h:commandButton value="create view">
+                            <f:ajax execute="@all" listener="#{createMap.createView}" render=":mapForm:viewList :newView" />
+                        </h:commandButton>
+
+                    </h:form>
+
+                </div>
+
+            </div>
+        </ui:define>
+    </ui:composition>
 </html>
+   
