@@ -44,11 +44,10 @@ public class UserServiceImpl implements UserService {
             log.error(msg);
             throw new IllegalArgumentException(msg);
         }
-        String password = passwordGenerator.generatePassword(8, true, true);
-        System.out.println(password);
+        
         try {
 
-            String hashedPassword = Crypto.encode(password);
+            String hashedPassword = Crypto.encode(user.getPassword());
             user.setPassword(hashedPassword);
 
             UserEntity newUserEntity = EntityDTOconvertor.convertUser(user);
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
             newUserEntity = userDao.create(newUserEntity);
 
             User newUser = EntityDTOconvertor.convertUser(newUserEntity);
-            newUser.setPassword(password);
+          
             return newUser;
 
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
