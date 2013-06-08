@@ -22,6 +22,7 @@ import org.jboss.seam.security.Identity;
  * @author andrej
  */
 public class AbstractBean {
+
     protected static final String MAP_KEY = "mapId";
     @Inject
     protected MapService mapService;
@@ -29,24 +30,27 @@ public class AbstractBean {
     protected ViewService viewService;
     @Inject
     protected UserService userService;
-    
     @Inject
     Identity identity;
-    protected User getUser() {
-        String id = identity.getUser().getId();
-        return userService.getUserById(new Long(id));
 
-        
+    protected User getUser() {
+        if (identity.isLoggedIn()) {
+            String id = identity.getUser().getId();
+            return userService.getUserById(new Long(id));
+        }
+        return userService.getUserByLogin(UserService.UNREGISTRED_LOGIN_NAME);
+
+
 
     }
-    protected boolean hasUserRights(User user, MyMap map, Permission permission){
+
+    protected boolean hasUserRights(User user, MyMap map, Permission permission) {
         List<MapPermission> mapPermissionsForUser = mapService.getMapPermissionsForUser(user);
-        for(MapPermission mapPermission : mapPermissionsForUser){
-            if(mapPermission.getMap().equals(map) && mapPermission.getPermission().equals(permission)){
+        for (MapPermission mapPermission : mapPermissionsForUser) {
+            if (mapPermission.getMap().equals(map) && mapPermission.getPermission().equals(permission)) {
                 return true;
             }
         }
         return false;
     }
-    
 }
