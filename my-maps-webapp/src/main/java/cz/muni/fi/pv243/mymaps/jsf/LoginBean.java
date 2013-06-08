@@ -73,4 +73,14 @@ public class LoginBean extends BaseAuthenticator {
         }
 
     }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+    
+    
 }

@@ -14,18 +14,16 @@
 
             <h:form id="loginForm">
 
-                <h:outputLabel for="login" styleClass="control-label"
-                               value="Login:" />
-                <h:inputText id="username" value="#{credentials.username}" />
+                <h:outputLabel for="login"    value="Login:" />
+                <h:inputText id="username" value="#{login.credentials.username}" />
                 <h:message for="username" errorClass="invalid" />
 
-                <h:outputLabel for="password" styleClass="control-label"
-                               value="Password:" />
-                <h:inputSecret id="password" value="#{credentials.password}" />
+                <h:outputLabel for="password" value="Password:" />
+                <h:inputSecret id="password" value="#{login.credentials.password}" />
                 <h:message for="password" errorClass="invalid" />
 
                 <h:panelGrid columns="2">
-                    <h:commandButton id="login" action="#{loginBean.login()}"
+                    <h:commandButton id="login" action="#{login.login}"
                                      value="Login" />
                     <h:messages styleClass="messages" errorClass="invalid"
                                 infoClass="valid" warnClass="warning" globalOnly="true" />

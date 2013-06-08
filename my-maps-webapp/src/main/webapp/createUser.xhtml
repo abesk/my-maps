@@ -24,6 +24,12 @@
                     <f:validateLength minimum="1"/>
                 </h:inputText>
                 <br/><br/>
+                
+                <h:outputText value="Passowrd " />
+                <h:inputSecret value="#{userBean.nick}" id="nick" >
+                    <f:validateLength minimum="1"/>
+                </h:inputSecret>
+                <br/><br/>
 
                 <h:outputText value="Password will be generated automatically." />
                 <br/><br/>
