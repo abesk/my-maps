@@ -1,20 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pv243.mymaps.jsf;
 
 import cz.muni.fi.pv243.mymaps.dto.User;
 import cz.muni.fi.pv243.mymaps.dto.View;
 import cz.muni.fi.pv243.mymaps.entities.Role;
-import cz.muni.fi.pv243.mymaps.service.UserService;
-import cz.muni.fi.pv243.mymaps.service.ViewService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -24,8 +16,7 @@ import javax.inject.Named;
 @ManagedBean
 @RequestScoped
 @Named(value = "userBean")
-public class UserBean extends AbstractBean{
-
+public class UserBean extends AbstractBean {
 
     private User user;
 
@@ -39,12 +30,6 @@ public class UserBean extends AbstractBean{
     private List<View> views;
 
     private List<User> users;
-
-    @EJB
-    UserService userService;
-
-    @EJB
-    ViewService viewService;
 
     public UserBean() {
     }
@@ -105,10 +90,10 @@ public class UserBean extends AbstractBean{
         this.views = views;
     }
 
-    
     public Role[] getRoles() {
         return Role.values();
     }
+
     public String createUser() {
 
         User newUser = new User();
@@ -126,31 +111,6 @@ public class UserBean extends AbstractBean{
     }
 
     public List<User> getUsers() {
-
-        User u1 = new User();
-        u1.setName("Franta");
-        u1.setPassword("Franta");
-        u1.setNick("xfranta");
-        u1.setRole(Role.User.toString());
-
-        User u2 = new User();
-        u2.setName("Petr");
-        u2.setPassword("Franta");
-        u2.setNick("xpetr");
-        u2.setRole(Role.User.toString());
-
-        User u3 = new User();
-        u3.setName("Pepa");
-        u3.setPassword("Franta");
-        u3.setNick("xpepa");
-        u3.setRole(Role.User.toString());
-
-        userService.createUser(u1);
-        System.out.println("inserted user1");
-        userService.createUser(u2);
-        System.out.println("inserted user2");
-        userService.createUser(u3);
-        System.out.println("inserted user3");
 
         return userService.geAllUsers();
     }
@@ -213,7 +173,7 @@ public class UserBean extends AbstractBean{
         //go back to profile
         return "profile.xhtml";
     }
-    
+
     public String register() {
 
         System.out.println(name);
@@ -221,8 +181,7 @@ public class UserBean extends AbstractBean{
         System.out.println(role);
         System.out.println(password);
         System.out.println(password2);
-        
-        
+
         if (password == null || !password.equals(password2)) {
             return "registration.xhtml";
         }
@@ -236,7 +195,7 @@ public class UserBean extends AbstractBean{
         User u = userService.createUser(newUser);
         return "login.xhtml";
     }
-    
+
     public String getCurrentUserToString() {
         User u = getUser();
 
