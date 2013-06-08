@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
     @Inject
     protected Logger log;
     public static final String ADMIN_LOGIN_NAME = "admin";
+    public static final String UNREGISTRED_LOGIN_NAME = "unregistred";
 
     @PostConstruct
     public void initNativeUsers() {
@@ -51,6 +52,15 @@ public class UserServiceImpl implements UserService {
             admin.setPassword("admin");
             admin.setViews(new ArrayList<View>());
             createUser(admin);
+        }
+        if (getUserByLogin(UNREGISTRED_LOGIN_NAME) == null) {
+            User unregistred = new User();
+            unregistred.setNick(UNREGISTRED_LOGIN_NAME);
+            unregistred.setName("UNREGISTRED");
+            unregistred.setRole(Role.User.toString());
+            unregistred.setPassword("admin");
+            unregistred.setViews(new ArrayList<View>());
+            createUser(unregistred);
         }
     }
 
