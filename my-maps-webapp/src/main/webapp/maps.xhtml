@@ -2,18 +2,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Browsing maps</title>
-        <link href="css/style.css" rel="stylesheet" />
-    </h:head>
-    <h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="template.xhtml">
+      <ui:define name="mainarea">
         <h1>Browsing maps</h1>
-        <ul id="menu">
-            <li><h:link value="Back to index" outcome="index" /></li>            
-        </ul>            
         <h:form>
+            Search by map name:
+            <h:inputText value="#{userMaps.searchName}" id="name" >
+                <f:validateLength minimum="1"/>
+            </h:inputText>
+            <h:commandButton value="Search" action="#{userMaps.searchByName}" />
+        </h:form> 
+        <h:form>
+            Search by creation date | From: 
+            <h:inputText id="dateFrom" value="#{userMaps.searchDateFrom}" 
+			size="20" required="true"
+			label="From date" >
+ 
+                <f:convertDateTime pattern="dd-MM-yyyy" />
+            </h:inputText> 
+            To:
+            <h:inputText id="dateTo" value="#{userMaps.searchDateTo}" 
+			size="20" required="true"
+			label="To date" >
+ 
+                <f:convertDateTime pattern="dd-MM-yyyy" />                
+            </h:inputText>
+            <h:commandButton value="Search" action="#{userMaps.searchByDate}" />
+            <br />
+            <h:message for="dateFrom" style="color:red" />
+            <br/>
+            <h:message for="dateTo" style="color:red" />            
+        </h:form>
+        <hr />
+        <h:form>            
             <h:commandButton value="New map" action="#{userMaps.newMap}"/>   
+            <h:commandButton value="Reset search filters" action="#{userMaps.getAllMaps}"/>   
+            <br />
+            Number of found maps: <h:outputText value="#{userMaps.maps.size()}" />
             <hr />
             <h:dataTable value="#{userMaps.maps}" var="map" class="mapTable">
                 <h:column>
@@ -38,5 +65,6 @@
                 </h:column>
             </h:dataTable>   
         </h:form>
-    </h:body>
+      </ui:define>
+    </ui:composition>
 </html>
