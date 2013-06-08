@@ -9,7 +9,38 @@
         <ui:define name="mainarea">
 
 
-            registration form
+           h:form id="userForm">
+
+                <h:outputText value="Name " />
+                <h:inputText value="#{userBean.name}" id="name" >
+                    <f:validateLength minimum="1"/>
+                </h:inputText >
+                <br/><br/>
+
+                <h:outputText value="Login " />
+                <h:inputText value="#{userBean.nick}" id="nick" >
+                    <f:validateLength minimum="1"/>
+                </h:inputText>
+                <br/><br/>
+                
+                <h:outputText value="Passowrd " />
+                <h:inputSecret value="#{userBean.nick}" id="nick" >
+                    <f:validateLength minimum="1"/>
+                </h:inputSecret>
+                <br/><br/>
+
+                <h:outputText value="Password will be generated automatically." />
+                <br/><br/>
+
+               
+                <br/><br/>
+
+                <h:outputText value="#{userBean.newUserText}" />
+                <h:messages style="color:red">
+                </h:messages>
+                <br/>
+                <h:commandButton action="#{userBean.createUser}" value="Create user" />
+            </h:form>
 
 
         </ui:define>

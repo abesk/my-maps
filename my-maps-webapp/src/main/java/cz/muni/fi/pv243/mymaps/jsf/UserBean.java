@@ -104,7 +104,7 @@ public class UserBean implements Serializable {
             User newUser = new User();
             newUser.setName(name);
             newUser.setNick(nick);
-            newUser.setRole(role);
+            newUser.setRole(Role.User.toString());
             newUser.setPassword(password);
             views = new ArrayList<>();
             newUser.setViews(views);
